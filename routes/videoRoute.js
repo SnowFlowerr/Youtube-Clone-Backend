@@ -5,7 +5,6 @@ import { verifyToken } from '../verifyToken.js';
 const router=express.Router();
 // create video
 router.post('/',verifyToken,createVideo)
-
 // get Video
 router.get('/:id',verifyToken,getVideo)
 // update Video
@@ -16,7 +15,7 @@ router.delete('/:id',verifyToken,deleteVideo)
 router.get('/',verifyToken,getAllVideos)
 // increase Views
 router.put('/view/:id',verifyToken,addViews)
-// increase Views
+// searched Video using category
 router.get('/category/:id',verifyToken,getAllCategory)
 // searched Video
 router.get('/search/:id',verifyToken,getSearchVideo)
