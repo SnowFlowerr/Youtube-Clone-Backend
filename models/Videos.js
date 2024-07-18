@@ -21,6 +21,10 @@ const videoSchema=new mongoose.Schema({
         type:String,
         required:true,
     },
+    category:{
+        type:String,
+        required:true,
+    },
     views:{
         type:Number,
         default:0,
@@ -46,4 +50,4 @@ const videoSchema=new mongoose.Schema({
     },
 },{timestamps:true})
 
-export default mongoose.model("V        ideo",videoSchema)
+export default mongoose.model("Video",videoSchema)
