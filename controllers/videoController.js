@@ -93,7 +93,7 @@ export const getAllCategory=async(req,res,next)=>{
 }
 export const getSearchVideo=async(req,res,next)=>{
     try{
-        const videos=await Videos.find({"title" : {$regex : req.params.id}})
+        const videos=await Videos.find({"title" : {$regex : req.params.id,$options:"i"}})
 
         return res.status(200).json(videos)
     }

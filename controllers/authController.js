@@ -11,11 +11,13 @@ export const signup=async(req,res,next)=>{
         const hash=bcrypt.hashSync(req.body.password,10);
         const newUser=new User({...req.body,password:hash})
         console.log(newUser)
+        console.log("hvjh")
         await newUser.save();
         return res.status(200).send("User Signup SuccessFul")
     }
     catch(err){
-        next(addError(500,'Not adble to create !'))
+        // next(addError(500,'Not adble to create !'))
+        return res.status(200).send(err.message)
     }
 }
 
@@ -27,6 +29,7 @@ export const login=async(req,res,next)=>{
         // console.log(user);
         
         const user=await User.findOne({username:req.body.username})
+        // console.log(user)
         if(!user){
             return next(addError(404,"User Not Present"))
         }
@@ -35,8 +38,8 @@ export const login=async(req,res,next)=>{
         //Password Check
         const isPasswordCorrect= await bcrypt.compare(req.body.password,user.password)
 
-        console.log(req.body.password,user.password)
-        console.log(isPasswordCorrect)
+        // console.log(req.body.password,user.password)
+        // console.log(isPasswordCorrect)
 
         if(!isPasswordCorrect){
             return next(addError(400,"Wrong Password"))
@@ -45,7 +48,7 @@ export const login=async(req,res,next)=>{
 
         const jwtToken=jwt.sign({id:user._id},process.env.JWT);
         const {password,...others}=user._doc;
-        console.log(jwtToken)
+        // console.log(jwtToken)
         res.cookie("access_token",jwtToken,{
             httpOnly:true
         }).status(200).json(others);

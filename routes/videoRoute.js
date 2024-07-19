@@ -12,7 +12,7 @@ router.put('/:id',verifyToken,updateVideo)
 // delete Video
 router.delete('/:id',verifyToken,deleteVideo)
 // get All Videos
-router.get('/',verifyToken,getAllVideos)
+router.get('/',getAllVideos)
 // increase Views
 router.put('/view/:id',verifyToken,addViews)
 // searched Video using category

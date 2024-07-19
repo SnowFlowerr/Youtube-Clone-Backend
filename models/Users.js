@@ -9,7 +9,6 @@ const UserSchema=new mongoose.Schema({
     password:{
         type:String,
         required:true,
-        unique:true,
     },
     name:{
         type:String,
@@ -22,7 +21,7 @@ const UserSchema=new mongoose.Schema({
     },
     img:{
         type:String,
-        required:true,
+        default:"img"
     },
     followers:{
         type:Number,

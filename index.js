@@ -5,11 +5,13 @@ import userRoutes from './routes/userRoute.js'
 import videoRoutes from './routes/videoRoute.js'
 import authRoutes from './routes/auth.js'
 import cookieParser from 'cookie-parser';
+import cors from "cors"
 
 
 const app=express();
 app.use(express.json())
 app.use(cookieParser())
+app.use(cors());
 dotenv.config()
 const connectApp=()=>{
     mongoose.connect(process.env.MONGODB).then(()=>{
