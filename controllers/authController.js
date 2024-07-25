@@ -7,17 +7,23 @@ import jwt from 'jsonwebtoken'
 export const signup=async(req,res,next)=>{
     try{
         console.log("signup");
-
+        const checkUser=await User.findOne({username:req.body.username})
+        if(checkUser){
+            return next(addError(400,"Username Already Exist"))
+        }
+        const checkEmail=await User.findOne({email:req.body.email})
+        if(checkEmail){
+            return next(addError(400,"Email Already Exist"))
+        }
         const hash=bcrypt.hashSync(req.body.password,10);
         const newUser=new User({...req.body,password:hash})
-        console.log(newUser)
-        console.log("hvjh")
-        await newUser.save();
+        // console.log(newUser)
+        // await newUser.save();
+        await User.create(newUser)
         return res.status(200).send("User Signup SuccessFul")
     }
     catch(err){
-        // next(addError(500,'Not adble to create !'))
-        return res.status(200).send(err.message)
+        next(addError(500,'Not able to create !'))
     }
 }
 
@@ -31,7 +37,7 @@ export const login=async(req,res,next)=>{
         const user=await User.findOne({username:req.body.username})
         // console.log(user)
         if(!user){
-            return next(addError(404,"User Not Present"))
+            return next(addError(404,"User Doesn't Exist"))
         }
         // console.log(req.body)
 
@@ -43,6 +49,7 @@ export const login=async(req,res,next)=>{
 
         if(!isPasswordCorrect){
             return next(addError(400,"Wrong Password"))
+            // return res.status(400).send("Wrong Password")
         }
         console.log("User signin Is Successful")
 

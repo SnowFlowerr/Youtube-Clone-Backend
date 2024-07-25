@@ -54,7 +54,7 @@ export const subscribe=async(req,res,next)=>{
         // await Users.findByIdAndUpdate(req.params.id,{
         //     $push:{followedUser:req.user.id}
         // });
-        await Users.findByIdAndUpdate(req.user.id,{
+        await Users.findByIdAndUpdate(req.params.id,{
             $inc:{followers:1},$push:{followedUser:req.user.id}
         });
         res.status(200).json("Subscribed")
@@ -70,7 +70,7 @@ export const unsubscribe=async(req,res,next)=>{
         // await Users.findByIdAndUpdate(req.params.id,{
         //     $pull:{followedUser:req.user.id}
         // });
-        await Users.findByIdAndUpdate(req.user.id,{
+        await Users.findByIdAndUpdate(req.params.id,{
             $inc:{followers:-1},$pull:{followedUser:req.user.id}
         });
         res.status(200).json("Unubscribed")

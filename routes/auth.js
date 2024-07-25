@@ -5,8 +5,9 @@ import { signup } from '../controllers/authController.js';
 // for creating user
 const router=express.Router();
 
-// sign in user
+// signup user
 router.post('/signup',signup)
+// signin user
 router.post('/login',login)
 
 // google auth

@@ -1,12 +1,13 @@
 import express from 'express';
-import { addViews, createVideo, deleteVideo, getAllVideos, getVideo, updateVideo, getAllCategory, getSearchVideo } from '../controllers/videoController.js';
+import { addViews, deleteVideo, getAllVideos, getVideo, updateVideo, getAllCategory, getSearchVideo } from '../controllers/videoController.js';
 import { verifyToken } from '../verifyToken.js';
+import { createVideo } from '../controllers/videoController.js';
 
 const router=express.Router();
 // create video
 router.post('/',verifyToken,createVideo)
 // get Video
-router.get('/:id',verifyToken,getVideo)
+router.get('/:id',getVideo)
 // update Video
 router.put('/:id',verifyToken,updateVideo)
 // delete Video
