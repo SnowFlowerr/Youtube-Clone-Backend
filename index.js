@@ -21,9 +21,7 @@ const connectApp=()=>{
         throw error;
     })
 }
-app.use('/',(req,res)=>{
-    return res.json("running")
-})
+
 app.use('/api/users',userRoutes)
 app.use('/api/videos',videoRoutes)
 app.use('/api/auth',authRoutes)
