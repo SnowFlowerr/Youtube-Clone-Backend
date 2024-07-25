@@ -36,7 +36,7 @@ app.use((err,req,res,next)=>{
     })
 })
 
-app.listen(800,()=>{
-    console.log("Server Connected at port",800)
+app.listen(8000,()=>{
+    console.log("Server Connected at port",8000)
     connectApp()
 })
