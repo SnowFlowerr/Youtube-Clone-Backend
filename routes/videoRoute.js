@@ -1,5 +1,5 @@
 import express from 'express';
-import { addViews, deleteVideo, getAllVideos, getVideo, updateVideo, getAllCategory, getSearchVideo } from '../controllers/videoController.js';
+import { addViews, deleteVideo, getAllVideos, getVideo, updateVideo, getAllCategory, getSearchVideo, like, dislike, unlike, undislike } from '../controllers/videoController.js';
 import { verifyToken } from '../verifyToken.js';
 import { createVideo } from '../controllers/videoController.js';
 
@@ -15,10 +15,18 @@ router.delete('/:id',verifyToken,deleteVideo)
 // get All Videos
 router.get('/',getAllVideos)
 // increase Views
-router.put('/view/:id',verifyToken,addViews)
+router.put('/view/:id',addViews)
 // searched Video using category
 router.get('/category/:id',verifyToken,getAllCategory)
 // searched Video
 router.get('/search/:id',verifyToken,getSearchVideo)
+// like Video
+router.put('/like/:id',verifyToken,like)
+// dislike Video
+router.put('/dislike/:id',verifyToken,dislike)
+// unlike Video
+router.put('/unlike/:id',verifyToken,unlike)
+// undislike Video
+router.put('/undislike/:id',verifyToken,undislike)
 
 export default router;

@@ -3,15 +3,18 @@ import express from 'express';
 import mongoose from 'mongoose';
 import userRoutes from './routes/userRoute.js'
 import videoRoutes from './routes/videoRoute.js'
+import shortsRoutes from './routes/shortsRoute.js'
 import authRoutes from './routes/auth.js'
 import cookieParser from 'cookie-parser';
 import cors from "cors"
 
-
 const app=express();
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,
+}));
 dotenv.config()
 const connectApp=()=>{
     mongoose.connect(process.env.MONGODB).then(()=>{
@@ -22,8 +25,12 @@ const connectApp=()=>{
     })
 }
 
+app.use('/',(req,res)=>{
+    return res.json("welcome")
+})
 app.use('/api/users',userRoutes)
 app.use('/api/videos',videoRoutes)
+app.use('/api/shorts',shortsRoutes)
 app.use('/api/auth',authRoutes)
 
 app.use((err,req,res,next)=>{

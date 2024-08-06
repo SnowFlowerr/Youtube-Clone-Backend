@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 
+
 export const signup=async(req,res,next)=>{
     try{
         console.log("signup");
@@ -58,7 +59,7 @@ export const login=async(req,res,next)=>{
         // console.log(jwtToken)
         res.cookie("access_token",jwtToken,{
             httpOnly:true
-        }).status(200).json(others);
+        }).status(200).json({...others,access_token: jwtToken });
 
     }
     catch(err){

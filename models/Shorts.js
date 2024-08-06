@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const videoSchema=new mongoose.Schema({
+const shortSchema=new mongoose.Schema({
     title:{
         type:String,
         required:true,
@@ -37,12 +37,6 @@ const videoSchema=new mongoose.Schema({
         type:Number,
         default:0,
     },
-    likedUser:{
-        type:[String]
-    },
-    dislikedUser:{
-        type:[String]
-    },
     tag:{
         type:[]
     },
@@ -56,4 +50,4 @@ const videoSchema=new mongoose.Schema({
     },
 },{timestamps:true})
 
-export default mongoose.model("Video",videoSchema)
+export default mongoose.model("Shorts",shortSchema)
