@@ -37,6 +37,12 @@ const shortSchema=new mongoose.Schema({
         type:Number,
         default:0,
     },
+    likedUser:{
+        type:[String]
+    },
+    dislikedUser:{
+        type:[String]
+    },
     tag:{
         type:[]
     },

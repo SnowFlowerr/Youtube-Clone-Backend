@@ -101,3 +101,47 @@ export const getSearchShorts=async(req,res,next)=>{
         next(err)
     }
 }
+export const like=async(req,res,next)=>{
+    try{
+        await Shorts.findByIdAndUpdate(req.params.id,{
+            $inc:{likes:1},$push:{likedUser:req.user.id}
+        });
+        res.status(200).json("liked")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const unlike=async(req,res,next)=>{
+    try{
+        await Shorts.findByIdAndUpdate(req.params.id,{
+            $inc:{likes:-1},$pull:{likedUser:req.user.id}
+        });
+        res.status(200).json("unliked")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const dislike=async(req,res,next)=>{
+    try{
+        await Shorts.findByIdAndUpdate(req.params.id,{
+            $inc:{dislikes:1},$push:{dislikedUser:req.user.id}
+        });
+        res.status(200).json("disliked")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const undislike=async(req,res,next)=>{
+    try{
+        await Shorts.findByIdAndUpdate(req.params.id,{
+            $inc:{dislikes:-1},$pull:{dislikedUser:req.user.id}
+        });
+        res.status(200).json("undisliked")
+    }
+    catch(err){
+        next(err)
+    }
+}
