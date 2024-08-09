@@ -14,7 +14,7 @@ router.delete('/:id',verifyToken,deleteShorts)
 // get All Videos
 router.get('/',getAllShorts)
 // increase Views
-router.put('/view/:id',verifyToken,addViews)
+router.put('/view/:id',addViews)
 // searched Video using category
 router.get('/category/:id',verifyToken,getAllCategory)
 // searched Video

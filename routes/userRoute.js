@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUser, updateUser, deleteUser, subscribe, unsubscribe } from '../controllers/userController.js';
+import { getUser, updateUser, deleteUser, subscribe, unsubscribe, history, likedVid, unlikedVid } from '../controllers/userController.js';
 import { verifyToken } from '../verifyToken.js';
 
 const router=express.Router();
@@ -14,5 +14,11 @@ router.get('/:id',getUser)
 router.put('/subscribe/:id',verifyToken,subscribe)
 // Unsubscribe a user
 router.put('/unsubscribe/:id',verifyToken,unsubscribe)
+// history
+router.put('/history/:id',verifyToken,history)
+// add liked video
+router.put('/liked/:id',verifyToken,likedVid)
+// remove liked video
+router.put('/unliked/:id',verifyToken,unlikedVid)
 
 export default router;

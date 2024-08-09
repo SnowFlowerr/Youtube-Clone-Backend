@@ -1,9 +1,11 @@
 import { addError } from "../error.js";
 import Videos from "../models/Videos.js"
+import Users from "../models/Users.js"
 
 export const createVideo=async(req,res,next)=>{
     try{
-        const newVideo =new Videos({userId:req.user.id,...req.body})
+        const {name}=await Users.findById(req.user.id)
+        const newVideo =new Videos({userId:req.user.id,...req.body,name})
         const savedVideo=await newVideo.save();
         return res.status(200).json(savedVideo);
     }

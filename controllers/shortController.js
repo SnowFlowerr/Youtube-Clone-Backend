@@ -3,7 +3,8 @@ import Shorts from "../models/Shorts.js";
 
 export const createShorts=async(req,res,next)=>{
     try{
-        const newVideo =new Shorts({userId:req.user.id,...req.body})
+        const {name}=await Users.findById(req.user.id)
+        const newVideo =new Shorts({userId:req.user.id,...req.body,name})
         const savedVideo=await newVideo.save();
         return res.status(200).json(savedVideo);
     }

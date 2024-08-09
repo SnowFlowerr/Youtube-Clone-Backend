@@ -79,3 +79,36 @@ export const unsubscribe=async(req,res,next)=>{
         next(err)
     }
 }
+export const likedVid=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{liked:req.params.id}
+        });
+        res.status(200).json("added to liked Video")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const unlikedVid=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $pull:{liked:req.params.id}
+        });
+        res.status(200).json("removed from liked Video")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const history=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{history:req.params.id}
+        });
+        res.status(200).json("added to history")
+    }
+    catch(err){
+        next(err)
+    }
+}
