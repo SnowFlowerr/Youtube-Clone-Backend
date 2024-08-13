@@ -7,6 +7,7 @@ const shortSchema=new mongoose.Schema({
     },
     userId:{
         type:String,
+        ref:"Users",
         required:true,
     },
     imageUrl:{
@@ -40,12 +41,12 @@ const shortSchema=new mongoose.Schema({
         type:Number,
         default:0,
     },
-    likedUser:{
-        type:[String]
-    },
-    dislikedUser:{
-        type:[String]
-    },
+    // likedUser:{
+    //     type:[String]
+    // },
+    // dislikedUser:{
+    //     type:[String]
+    // },
     tag:{
         type:[]
     },

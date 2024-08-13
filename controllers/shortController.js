@@ -1,5 +1,6 @@
 import { addError } from "../error.js";
 import Shorts from "../models/Shorts.js";
+import Users from "../models/Users.js";
 
 export const createShorts=async(req,res,next)=>{
     try{
@@ -26,6 +27,18 @@ export const updateShorts=async(req,res,next)=>{
             return res.status(200).json(updatedVideo);
         }
         return res.status(200).json("You cannot Update other's videos");
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const getOneShorts=async(req,res,next)=>{
+    try{
+        const videos = await Shorts.findById(req.params.id).populate("userId");;
+        if(!videos){
+            return next(addError(404,"Video Not found !"))
+        }
+        return res.status(200).json(videos);
     }
     catch(err){
         next(err)
@@ -62,8 +75,9 @@ export const deleteShorts=async(req,res,next)=>{
 }
 
 export const getAllShorts=async(req,res,next)=>{
+    const {limit,skip}=req.query;
     try{
-        const videos=await Shorts.find()
+        const videos=await Shorts.find().limit(limit).skip(skip)
         return res.status(200).json(videos)
     }
     catch(err){
@@ -104,8 +118,11 @@ export const getSearchShorts=async(req,res,next)=>{
 }
 export const like=async(req,res,next)=>{
     try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{liked:req.params.id}
+        });
         await Shorts.findByIdAndUpdate(req.params.id,{
-            $inc:{likes:1},$push:{likedUser:req.user.id}
+            $inc:{likes:1}
         });
         res.status(200).json("liked")
     }
@@ -115,8 +132,11 @@ export const like=async(req,res,next)=>{
 }
 export const unlike=async(req,res,next)=>{
     try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $pull:{liked:req.params.id}
+        });
         await Shorts.findByIdAndUpdate(req.params.id,{
-            $inc:{likes:-1},$pull:{likedUser:req.user.id}
+            $inc:{likes:-1}
         });
         res.status(200).json("unliked")
     }
@@ -126,8 +146,11 @@ export const unlike=async(req,res,next)=>{
 }
 export const dislike=async(req,res,next)=>{
     try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{disliked:req.params.id}
+        });
         await Shorts.findByIdAndUpdate(req.params.id,{
-            $inc:{dislikes:1},$push:{dislikedUser:req.user.id}
+            $inc:{dislikes:1}
         });
         res.status(200).json("disliked")
     }
@@ -137,8 +160,11 @@ export const dislike=async(req,res,next)=>{
 }
 export const undislike=async(req,res,next)=>{
     try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $pull:{disliked:req.params.id}
+        });
         await Shorts.findByIdAndUpdate(req.params.id,{
-            $inc:{dislikes:-1},$pull:{dislikedUser:req.user.id}
+            $inc:{dislikes:-1}
         });
         res.status(200).json("undisliked")
     }

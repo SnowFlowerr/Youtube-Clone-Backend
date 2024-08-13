@@ -1,6 +1,6 @@
 import express from 'express';
 import { verifyToken } from '../verifyToken.js';
-import { addViews, createShorts, deleteShorts, dislike, getAllCategory, getAllShorts, getSearchShorts, getShorts, like, undislike, unlike, updateShorts } from '../controllers/shortController.js';
+import { addViews, createShorts, deleteShorts, dislike, getAllCategory, getAllShorts, getOneShorts, getSearchShorts, getShorts, like, undislike, unlike, updateShorts } from '../controllers/shortController.js';
 
 const router=express.Router();
 // create video
@@ -13,6 +13,8 @@ router.put('/:id',verifyToken,updateShorts)
 router.delete('/:id',verifyToken,deleteShorts)
 // get All Videos
 router.get('/',getAllShorts)
+// get one shorts
+router.get('/oneShort/:id',getOneShorts)
 // increase Views
 router.put('/view/:id',addViews)
 // searched Video using category

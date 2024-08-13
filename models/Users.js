@@ -21,20 +21,23 @@ const UserSchema=new mongoose.Schema({
     },
     img:{
         type:String,
-        default:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDCrr_w4eRQBV36vW3owNqK3Hsesq6lNpSsA&s"
+        default:"img"
     },
     followers:{
         type:Number,
         default:0,
     },
     followedUser:{
-        type:[String]
+        type:[{type:"String",ref:"Users"}]
     },
     history:{
-        type:[String]
+        type:[{type:"String",ref:["Video","Shorts"]}]
     },
     liked:{
-        type:[String]
+        type:[{type:"String",ref:["Video","Shorts"]}]
+    },
+    disliked:{
+        type:[{type:"String",ref:["Video","Shorts"]}]
     },
     isAdmin:{
         type:Boolean,

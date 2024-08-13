@@ -34,7 +34,7 @@ export const updateVideo=async(req,res,next)=>{
 }
 export const getVideo=async(req,res,next)=>{
     try{
-        const videos = await Videos.findById(req.params.id);
+        const videos = await Videos.findById(req.params.id).populate("userId");
         if(!videos){
             return next(addError(404,"Video Not found !"))
         }
@@ -63,8 +63,9 @@ export const deleteVideo=async(req,res,next)=>{
 }
 
 export const getAllVideos=async(req,res,next)=>{
+    const {limit,skip}=req.query;
     try{
-        const videos=await Videos.find()
+        const videos=await Videos.find().populate('userId').limit(limit).skip(skip)
         return res.status(200).json(videos)
     }
     catch(err){
@@ -105,8 +106,11 @@ export const getSearchVideo=async(req,res,next)=>{
 }
 export const like=async(req,res,next)=>{
     try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{liked:req.params.id}
+        });
         await Videos.findByIdAndUpdate(req.params.id,{
-            $inc:{likes:1},$push:{likedUser:req.user.id}
+            $inc:{likes:1}
         });
         res.status(200).json("liked")
     }
@@ -116,8 +120,11 @@ export const like=async(req,res,next)=>{
 }
 export const unlike=async(req,res,next)=>{
     try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $pull:{liked:req.params.id}
+        });
         await Videos.findByIdAndUpdate(req.params.id,{
-            $inc:{likes:-1},$pull:{likedUser:req.user.id}
+            $inc:{likes:-1}
         });
         res.status(200).json("unliked")
     }
@@ -127,8 +134,11 @@ export const unlike=async(req,res,next)=>{
 }
 export const dislike=async(req,res,next)=>{
     try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{disliked:req.params.id}
+        });
         await Videos.findByIdAndUpdate(req.params.id,{
-            $inc:{dislikes:1},$push:{dislikedUser:req.user.id}
+            $inc:{dislikes:1}
         });
         res.status(200).json("disliked")
     }
@@ -138,8 +148,11 @@ export const dislike=async(req,res,next)=>{
 }
 export const undislike=async(req,res,next)=>{
     try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $pull:{disliked:req.params.id}
+        });
         await Videos.findByIdAndUpdate(req.params.id,{
-            $inc:{dislikes:-1},$pull:{dislikedUser:req.user.id}
+            $inc:{dislikes:-1}
         });
         res.status(200).json("undisliked")
     }

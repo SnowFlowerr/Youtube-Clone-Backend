@@ -51,11 +51,11 @@ export const getUser=async(req,res,next)=>{
 export const subscribe=async(req,res,next)=>{
     try{
         // console.log(req.params.id)
-        // await Users.findByIdAndUpdate(req.params.id,{
-        //     $push:{followedUser:req.user.id}
-        // });
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{followedUser:req.params.id}
+        });
         await Users.findByIdAndUpdate(req.params.id,{
-            $inc:{followers:1},$push:{followedUser:req.user.id}
+            $inc:{followers:1}
         });
         res.status(200).json("Subscribed")
     }
@@ -70,8 +70,11 @@ export const unsubscribe=async(req,res,next)=>{
         // await Users.findByIdAndUpdate(req.params.id,{
         //     $pull:{followedUser:req.user.id}
         // });
+        await Users.findByIdAndUpdate(req.user.id,{
+            $pull:{followedUser:req.params.id}
+        });
         await Users.findByIdAndUpdate(req.params.id,{
-            $inc:{followers:-1},$pull:{followedUser:req.user.id}
+            $inc:{followers:-1}
         });
         res.status(200).json("Unubscribed")
     }
@@ -79,23 +82,33 @@ export const unsubscribe=async(req,res,next)=>{
         next(err)
     }
 }
-export const likedVid=async(req,res,next)=>{
+// export const likedVid=async(req,res,next)=>{
+//     try{
+//         await Users.findByIdAndUpdate(req.user.id,{
+//             $push:{liked:req.params.id}
+//         });
+//         res.status(200).json("added to liked Video")
+//     }
+//     catch(err){
+//         next(err)
+//     }
+// }
+// export const unlikedVid=async(req,res,next)=>{
+//     try{
+//         await Users.findByIdAndUpdate(req.user.id,{
+//             $pull:{liked:req.params.id}
+//         });
+//         res.status(200).json("removed from liked Video")
+//     }
+//     catch(err){
+//         next(err)
+//     }
+// }
+export const like=async(req,res,next)=>{
     try{
-        await Users.findByIdAndUpdate(req.user.id,{
-            $push:{liked:req.params.id}
-        });
-        res.status(200).json("added to liked Video")
-    }
-    catch(err){
-        next(err)
-    }
-}
-export const unlikedVid=async(req,res,next)=>{
-    try{
-        await Users.findByIdAndUpdate(req.user.id,{
-            $pull:{liked:req.params.id}
-        });
-        res.status(200).json("removed from liked Video")
+        const likes=await Users.findById(req.user.id).populate("liked");
+        const {password,history,...others}=likes._doc;
+        res.status(200).json(others)
     }
     catch(err){
         next(err)
@@ -103,6 +116,19 @@ export const unlikedVid=async(req,res,next)=>{
 }
 export const history=async(req,res,next)=>{
     try{
+        const history=await Users.findById(req.user.id).populate(["history","liked","disliked"]);
+        const {password,...others}=history._doc;
+        res.status(200).json(others)
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const addHistory=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+        $pull:{history:req.params.id}
+        });
         await Users.findByIdAndUpdate(req.user.id,{
             $push:{history:req.params.id}
         });

@@ -55,7 +55,7 @@ export const login=async(req,res,next)=>{
         console.log("User signin Is Successful")
 
         const jwtToken=jwt.sign({id:user._id},process.env.JWT);
-        const {password,...others}=user._doc;
+        const {password,history,...others}=user._doc;
         // console.log(jwtToken)
         res.cookie("access_token",jwtToken,{
             httpOnly:false
