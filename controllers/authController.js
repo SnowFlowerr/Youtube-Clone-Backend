@@ -20,8 +20,18 @@ export const signup=async(req,res,next)=>{
         const newUser=new User({...req.body,password:hash})
         // console.log(newUser)
         // await newUser.save();
-        await User.create(newUser)
-        return res.status(200).send("User Signup SuccessFul")
+        const user=await User.create(newUser)
+
+        console.log("User signup Is Successful")
+
+        const jwtToken=jwt.sign({id:user._id},process.env.JWT);
+        const {password,history,followedUser,liked,disliked,followers,...others}=user._doc;
+        // console.log(jwtToken)
+        res.cookie("access_token",jwtToken,{
+            httpOnly:false,
+            secure:true,
+            sameSite: 'None',
+        }).status(200).json({...others,access_token: jwtToken });
     }
     catch(err){
         next(addError(500,'Not able to create !'))
@@ -55,10 +65,12 @@ export const login=async(req,res,next)=>{
         console.log("User signin Is Successful")
 
         const jwtToken=jwt.sign({id:user._id},process.env.JWT);
-        const {password,history,...others}=user._doc;
+        const {password,history,followedUser,liked,disliked,followers,...others}=user._doc;
         // console.log(jwtToken)
         res.cookie("access_token",jwtToken,{
-            httpOnly:false
+            httpOnly:false,
+            secure:true,
+            sameSite: 'None',
         }).status(200).json({...others,access_token: jwtToken });
 
     }
