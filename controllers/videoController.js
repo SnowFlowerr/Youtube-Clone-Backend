@@ -34,7 +34,7 @@ export const updateVideo=async(req,res,next)=>{
 }
 export const getVideo=async(req,res,next)=>{
     try{
-        const videos = await Videos.findById(req.params.id).populate("userId");
+        const videos = await Videos.findById(req.params.id);
         if(!videos){
             return next(addError(404,"Video Not found !"))
         }
@@ -65,7 +65,7 @@ export const deleteVideo=async(req,res,next)=>{
 export const getAllVideos=async(req,res,next)=>{
     const {limit,skip}=req.query;
     try{
-        const videos=await Videos.find().populate('userId').limit(limit).skip(skip)
+        const videos=await Videos.find().limit(limit).skip(skip)
         return res.status(200).json(videos)
     }
     catch(err){

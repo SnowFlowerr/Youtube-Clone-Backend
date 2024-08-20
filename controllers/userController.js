@@ -42,6 +42,16 @@ export const deleteUser=async(req,res,next)=>{
 export const getUser=async(req,res,next)=>{
     try{
         const user=await Users.findById(req.params.id);
+        const {password,history,followedUser,liked,disliked,saved,...others}=user._doc;
+        res.status(200).json({...others})
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const getCurrentUser=async(req,res,next)=>{
+    try{
+        const user=await Users.findById(req.user.id);
         res.status(200).json(user)
     }
     catch(err){
@@ -82,6 +92,74 @@ export const unsubscribe=async(req,res,next)=>{
         next(err)
     }
 }
+export const isSubscribe=async(req,res,next)=>{
+    try{
+        const isSubs=await Users.findOne({
+            _id: req.user.id,
+            followedUser: req.params.id,
+        });
+        if(isSubs){
+            return res.status(200).json(true)
+        }
+        else{
+            return res.status(200).json(false)
+        }
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const isLiked=async(req,res,next)=>{
+    try{
+        const isSubs=await Users.findOne({
+            _id: req.user.id,
+            liked: req.params.id,
+        });
+        if(isSubs){
+            return res.status(200).json(true)
+        }
+        else{
+            return res.status(200).json(false)
+        }
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const isDisliked=async(req,res,next)=>{
+    try{
+        const isSubs=await Users.findOne({
+            _id: req.user.id,
+            disliked: req.params.id,
+        });
+        if(isSubs){
+            return res.status(200).json(true)
+        }
+        else{
+            return res.status(200).json(false)
+        }
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const isSaved=async(req,res,next)=>{
+    try{
+        const isSubs=await Users.findOne({
+            _id: req.user.id,
+            saved: req.params.id,
+        });
+        if(isSubs){
+            return res.status(200).json(true)
+        }
+        else{
+            return res.status(200).json(false)
+        }
+    }
+    catch(err){
+        next(err)
+    }
+}
 // export const likedVid=async(req,res,next)=>{
 //     try{
 //         await Users.findByIdAndUpdate(req.user.id,{
@@ -116,7 +194,7 @@ export const like=async(req,res,next)=>{
 }
 export const history=async(req,res,next)=>{
     try{
-        const history=await Users.findById(req.user.id).populate(["history","liked","disliked"]);
+        const history=await Users.findById(req.user.id).populate(["history","liked","disliked","saved"]);
         const {password,...others}=history._doc;
         res.status(200).json(others)
     }
@@ -133,6 +211,28 @@ export const addHistory=async(req,res,next)=>{
             $push:{history:req.params.id}
         });
         res.status(200).json("added to history")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const addToSave=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{saved:req.params.id}
+        });
+        res.status(200).json("added to saved")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const removeFromSave=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $pull:{saved:req.params.id}
+        });
+        res.status(200).json("removed from saved")
     }
     catch(err){
         next(err)

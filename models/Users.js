@@ -39,6 +39,9 @@ const UserSchema=new mongoose.Schema({
     disliked:{
         type:[{type:"String",ref:["Video","Shorts"]}]
     },
+    saved:{
+        type:[{type:"String",ref:["Video","Shorts"]}]
+    },
     isAdmin:{
         type:Boolean,
         default:false,
