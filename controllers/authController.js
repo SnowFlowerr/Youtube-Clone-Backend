@@ -68,7 +68,7 @@ export const login=async(req,res,next)=>{
         const {password,history,followedUser,liked,disliked,followers,...others}=user._doc;
         // console.log(jwtToken)
         res.cookie("access_token",jwtToken,{
-            httpOnly:true,
+            httpOnly:false,
             secure:true,
             sameSite: 'None',
         }).status(200).json({...others,access_token: jwtToken });
