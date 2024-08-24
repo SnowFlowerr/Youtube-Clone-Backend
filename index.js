@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin: 'https://video-streaming-app-frontend-lilac.vercel.app/',
+    origin: 'https://video-streaming-app-frontend-lilac.vercel.app',
     credentials: true,
 }));
 
