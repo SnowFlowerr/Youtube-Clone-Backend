@@ -69,7 +69,6 @@ export const login=async(req,res,next)=>{
         // console.log(jwtToken)
         res.cookie("access_token",jwtToken,{
             // httpOnly:true,
-            domain: 'honest-stillness-production.up.railway.app',
             secure:true,
             sameSite: 'None',
         }).status(200).json({...others,access_token: jwtToken });
