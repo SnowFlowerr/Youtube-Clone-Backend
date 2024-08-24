@@ -14,7 +14,6 @@ app.use(cookieParser())
 
 app.use(cors({
     origin: 'https://video-streaming-app-frontend-lilac.vercel.app/',
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     credentials: true,
 }));
 
