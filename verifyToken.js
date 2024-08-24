@@ -3,6 +3,7 @@ import { addError } from "./error.js";
 export const verifyToken=(req,res,next)=>{
     const token = req.cookies.access_token
     if(!token){
+        console.log(token+"2")
         return next(addError(401,"You are not authorised"))
     }
     jwt.verify(token,process.env.JWT,(err,user)=>{
