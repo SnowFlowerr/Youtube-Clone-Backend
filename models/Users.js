@@ -31,10 +31,10 @@ const UserSchema=new mongoose.Schema({
         type:[{type:"String",ref:"Users"}]
     },
     history:{
-        type:[{type:"String",ref:["Video","Shorts"]}]
+        type:[{type:"String",ref:["Video", "Shorts"]}]
     },
     liked:{
-        type:[{type:"String",ref:["Video","Shorts"]}]
+        type:[{type:"String",ref:["Video", "Shorts"]}]
     },
     disliked:{
         type:[{type:"String",ref:["Video","Shorts"]}]
