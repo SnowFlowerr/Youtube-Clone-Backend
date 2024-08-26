@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUser, updateUser, deleteUser, subscribe, unsubscribe, history, addHistory, like, addToSave, removeFromSave, getCurrentUser, isSubscribe, isLiked, isDisliked, isSaved } from '../controllers/userController.js';
+import { getUser, updateUser, deleteUser, subscribe, unsubscribe, history, addHistory, like, addToSave, removeFromSave, getCurrentUser, isSubscribe, isLiked, isDisliked, isSaved, isShortsLiked, isShortsDisliked, isShortsSaved, historyShorts, addHistoryShorts, likeShorts, addToSaveShorts, removeFromSaveShorts } from '../controllers/userController.js';
 import { verifyToken } from '../verifyToken.js';
 
 const router=express.Router();
@@ -34,5 +34,24 @@ router.get('/like',verifyToken,like)
 router.put('/addsave/:id',verifyToken,addToSave)
 // remove from saved
 router.put('/removesave/:id',verifyToken,removeFromSave)
+
+
+// is shorts liked
+router.get('/islikedshorts/:id',verifyToken,isShortsLiked)
+// is shorts disliked
+router.get('/isdislikedshorts/:id',verifyToken,isShortsDisliked)
+// is shorts saved
+router.get('/issavedshorts/:id',verifyToken,isShortsSaved)
+// history
+router.get('/shortshistory',verifyToken,historyShorts)
+// Add history
+router.put('/shortshistory/:id',verifyToken,addHistoryShorts)
+// add shorts video
+router.get('/shortslike',verifyToken,likeShorts)
+// add to saved
+router.put('/addsaveshorts/:id',verifyToken,addToSaveShorts)
+// remove from saved
+router.put('/removesaveshorts/:id',verifyToken,removeFromSaveShorts)
+
 
 export default router;

@@ -28,9 +28,11 @@ export const signup=async(req,res,next)=>{
         const {password,history,followedUser,liked,disliked,followers,saved,...others}=user._doc;
         // console.log(jwtToken)
         res.cookie("access_token",jwtToken,{
-            // httpOnly:true,
-            secure:true,
-            sameSite: 'None',
+            httpOnly:false,
+            domain:"honest-stillness-production.up.railway.app",
+            encode: String
+            // secure:true,
+            // sameSite: 'None',
         }).status(200).json({...others,access_token: jwtToken });
     }
     catch(err){
@@ -68,9 +70,11 @@ export const login=async(req,res,next)=>{
         const {password,history,followedUser,liked,disliked,followers,...others}=user._doc;
         // console.log(jwtToken)
         res.cookie("access_token",jwtToken,{
-            // httpOnly:true,
-            secure:true,
-            sameSite: 'None',
+            httpOnly:false,
+            domain:"honest-stillness-production.up.railway.app",
+            encode: String
+            // secure:true,
+            // sameSite: 'None',
         }).status(200).json({...others,access_token: jwtToken });
 
     }

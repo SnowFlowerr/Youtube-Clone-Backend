@@ -120,7 +120,7 @@ export const getSearchShorts=async(req,res,next)=>{
 export const like=async(req,res,next)=>{
     try{
         await Users.findByIdAndUpdate(req.user.id,{
-            $push:{liked:req.params.id}
+            $push:{shortsLiked:req.params.id}
         });
         await Shorts.findByIdAndUpdate(req.params.id,{
             $inc:{likes:1}
@@ -134,7 +134,7 @@ export const like=async(req,res,next)=>{
 export const unlike=async(req,res,next)=>{
     try{
         await Users.findByIdAndUpdate(req.user.id,{
-            $pull:{liked:req.params.id}
+            $pull:{shortsLiked:req.params.id}
         });
         await Shorts.findByIdAndUpdate(req.params.id,{
             $inc:{likes:-1}
@@ -148,7 +148,7 @@ export const unlike=async(req,res,next)=>{
 export const dislike=async(req,res,next)=>{
     try{
         await Users.findByIdAndUpdate(req.user.id,{
-            $push:{disliked:req.params.id}
+            $push:{shortsDisliked:req.params.id}
         });
         await Shorts.findByIdAndUpdate(req.params.id,{
             $inc:{dislikes:1}
@@ -162,7 +162,7 @@ export const dislike=async(req,res,next)=>{
 export const undislike=async(req,res,next)=>{
     try{
         await Users.findByIdAndUpdate(req.user.id,{
-            $pull:{disliked:req.params.id}
+            $pull:{shortsDisliked:req.params.id}
         });
         await Shorts.findByIdAndUpdate(req.params.id,{
             $inc:{dislikes:-1}

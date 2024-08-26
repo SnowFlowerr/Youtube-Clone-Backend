@@ -12,7 +12,6 @@ const videoSchema=new mongoose.Schema({
     },
     imageUrl:{
         type:String,
-        required:true,
     },
     videoUrl:{
         type:String,
@@ -23,11 +22,10 @@ const videoSchema=new mongoose.Schema({
     },
     description:{
         type:String,
-        required:true,
     },
     category:{
         type:String,
-        required:true,
+        // required:true,
     },
     views:{
         type:Number,
@@ -55,7 +53,7 @@ const videoSchema=new mongoose.Schema({
             default:false,
     },
     duration:{
-            type:String,
+            type:Number,
             default:0,
     },
 },{timestamps:true})

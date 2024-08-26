@@ -12,7 +12,7 @@ const shortSchema=new mongoose.Schema({
     },
     imageUrl:{
         type:String,
-        required:true,
+        // required:true,
     },
     videoUrl:{
         type:String,
@@ -23,11 +23,11 @@ const shortSchema=new mongoose.Schema({
     },
     description:{
         type:String,
-        required:true,
+        // required:true,
     },
     category:{
         type:String,
-        required:true,
+        // required:true,
     },
     views:{
         type:Number,

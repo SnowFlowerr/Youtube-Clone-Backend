@@ -31,16 +31,28 @@ const UserSchema=new mongoose.Schema({
         type:[{type:"String",ref:"Users"}]
     },
     history:{
-        type:[{type:"String",ref:["Video", "Shorts"]}]
+        type:[{type:"String",ref:"Video"}]
     },
     liked:{
-        type:[{type:"String",ref:["Video", "Shorts"]}]
+        type:[{type:"String",ref:"Video"}]
     },
     disliked:{
-        type:[{type:"String",ref:["Video","Shorts"]}]
+        type:[{type:"String",ref:"Video"}]
     },
     saved:{
-        type:[{type:"String",ref:["Video","Shorts"]}]
+        type:[{type:"String",ref:"Video"}]
+    },
+    shortsHistory:{
+        type:[{type:"String",ref:"Shorts"}]
+    },
+    shortsLiked:{
+        type:[{type:"String",ref:"Shorts"}]
+    },
+    shortsDisliked:{
+        type:[{type:"String",ref:"Shorts"}]
+    },
+    shortsSaved:{
+        type:[{type:"String",ref:"Shorts"}]
     },
     isAdmin:{
         type:Boolean,

@@ -52,7 +52,8 @@ export const getUser=async(req,res,next)=>{
 export const getCurrentUser=async(req,res,next)=>{
     try{
         const user=await Users.findById(req.user.id);
-        res.status(200).json(user)
+        const {password,history,followedUser,liked,disliked,saved,...others}=user._doc;
+        res.status(200).json({...others})
     }
     catch(err){
         next(err)
@@ -160,28 +161,57 @@ export const isSaved=async(req,res,next)=>{
         next(err)
     }
 }
-// export const likedVid=async(req,res,next)=>{
-//     try{
-//         await Users.findByIdAndUpdate(req.user.id,{
-//             $push:{liked:req.params.id}
-//         });
-//         res.status(200).json("added to liked Video")
-//     }
-//     catch(err){
-//         next(err)
-//     }
-// }
-// export const unlikedVid=async(req,res,next)=>{
-//     try{
-//         await Users.findByIdAndUpdate(req.user.id,{
-//             $pull:{liked:req.params.id}
-//         });
-//         res.status(200).json("removed from liked Video")
-//     }
-//     catch(err){
-//         next(err)
-//     }
-// }
+export const isShortsLiked=async(req,res,next)=>{
+    try{
+        const isSubs=await Users.findOne({
+            _id: req.user.id,
+            shortsLiked: req.params.id,
+        });
+        if(isSubs){
+            return res.status(200).json(true)
+        }
+        else{
+            return res.status(200).json(false)
+        }
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const isShortsDisliked=async(req,res,next)=>{
+    try{
+        const isSubs=await Users.findOne({
+            _id: req.user.id,
+            shortsDisliked: req.params.id,
+        });
+        if(isSubs){
+            return res.status(200).json(true)
+        }
+        else{
+            return res.status(200).json(false)
+        }
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const isShortsSaved=async(req,res,next)=>{
+    try{
+        const isSubs=await Users.findOne({
+            _id: req.user.id,
+            shortsSaved: req.params.id,
+        });
+        if(isSubs){
+            return res.status(200).json(true)
+        }
+        else{
+            return res.status(200).json(false)
+        }
+    }
+    catch(err){
+        next(err)
+    }
+}
 export const like=async(req,res,next)=>{
     try{
         const likes=await Users.findById(req.user.id).populate("liked");
@@ -231,6 +261,62 @@ export const removeFromSave=async(req,res,next)=>{
     try{
         await Users.findByIdAndUpdate(req.user.id,{
             $pull:{saved:req.params.id}
+        });
+        res.status(200).json("removed from saved")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const likeShorts=async(req,res,next)=>{
+    try{
+        const likes=await Users.findById(req.user.id).populate("shortsLiked");
+        const {password,history,...others}=likes._doc;
+        res.status(200).json(others)
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const historyShorts=async(req,res,next)=>{
+    try{
+        const history=await Users.findById(req.user.id).populate(["shortsHistory","shortsLiked","shortsDisliked","shortsSaved"]);
+        const {password,...others}=history._doc;
+        res.status(200).json(others)
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const addHistoryShorts=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+        $pull:{shortsHistory:req.params.id}
+        });
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{shortsHistory:req.params.id}
+        });
+        res.status(200).json("added to history")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const addToSaveShorts=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{shortsSaved:req.params.id}
+        });
+        res.status(200).json("added to saved")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const removeFromSaveShorts=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $pull:{shortsSaved:req.params.id}
         });
         res.status(200).json("removed from saved")
     }
