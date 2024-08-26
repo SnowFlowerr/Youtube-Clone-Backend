@@ -63,6 +63,7 @@ export const deleteVideo=async(req,res,next)=>{
 }
 
 export const getAllVideos=async(req,res,next)=>{
+    // console.log("ewfewaf")
     const {limit,skip}=req.query;
     try{
         const videos=await Videos.find().limit(limit).skip(skip)
