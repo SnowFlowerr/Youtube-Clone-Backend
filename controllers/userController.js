@@ -42,7 +42,7 @@ export const deleteUser=async(req,res,next)=>{
 export const getUser=async(req,res,next)=>{
     try{
         const user=await Users.findById(req.params.id);
-        const {password,history,followedUser,liked,disliked,saved,...others}=user._doc;
+        const {password,history,shortsHistory,followedUser,liked,shortsLiked,disliked,shortsDisliked,saved,shortsSaved,...others}=user._doc;
         res.status(200).json({...others})
     }
     catch(err){
@@ -52,7 +52,7 @@ export const getUser=async(req,res,next)=>{
 export const getCurrentUser=async(req,res,next)=>{
     try{
         const user=await Users.findById(req.user.id);
-        const {password,history,followedUser,liked,disliked,saved,...others}=user._doc;
+        const {password,history,shortsHistory,followedUser,liked,shortsLiked,disliked,shortsDisliked,saved,shortsSaved,...others}=user._doc;
         res.status(200).json({...others})
     }
     catch(err){
@@ -225,7 +225,7 @@ export const like=async(req,res,next)=>{
 export const history=async(req,res,next)=>{
     try{
         const history=await Users.findById(req.user.id).populate(["history","liked","disliked","saved"]);
-        const {password,...others}=history._doc;
+        const {password,shortsHistory,shortsLiked,shortsDisliked,shortsSaved,...others}=history._doc;
         res.status(200).json(others)
     }
     catch(err){
@@ -281,7 +281,7 @@ export const likeShorts=async(req,res,next)=>{
 export const historyShorts=async(req,res,next)=>{
     try{
         const history=await Users.findById(req.user.id).populate(["shortsHistory","shortsLiked","shortsDisliked","shortsSaved"]);
-        const {password,...others}=history._doc;
+        const {password,liked,disliked,saved,...others}=history._doc;
         res.status(200).json(others)
     }
     catch(err){
