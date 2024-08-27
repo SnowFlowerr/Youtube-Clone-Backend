@@ -28,10 +28,11 @@ export const signup = async (req, res, next) => {
         const { password, history, followedUser, liked, disliked, followers, saved, ...others } = user._doc;
         // console.log(jwtToken)
         res.cookie("access_token", jwtToken, {
-            httpOnly: true,
+            domain: '.honest-stillness-production.up.railway.app',
+            path:"/",
             secure: true,
+            // httpOnly: true,
             sameSite: 'none',
-            domain: 'honest-stillness-production.up.railway.app',
         }).status(200).json({ ...others, access_token: jwtToken });
     }
     catch (err) {
@@ -69,10 +70,11 @@ export const login = async (req, res, next) => {
         const { password, history, followedUser, liked, disliked, followers, ...others } = user._doc;
         // console.log(jwtToken)
         res.cookie("access_token", jwtToken, {
-            httpOnly: true,
-            secure: false,
+            domain: '.honest-stillness-production.up.railway.app',
+            path:"/",
+            secure: true,
+            // httpOnly: true,
             sameSite: 'none',
-            // domain: 'honest-stillness-production.up.railway.app',
         }).status(200).json({ ...others, access_token: jwtToken });
 
     }
