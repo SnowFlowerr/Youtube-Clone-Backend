@@ -40,7 +40,7 @@ router.put('/removesave/:id',verifyToken,removeFromSave)
 // add to searchHistory
 router.put('/addsearchHistory/:id',verifyToken,addToSearchHistory)
 // remove from searchHistory
-router.put('/removesearchHistory/:id',verifyToken,removeFromSearchHistory)
+router.delete('/removesearchHistory/:id',verifyToken,removeFromSearchHistory)
 // get searchHistory
 router.get('/getsearchHistory',verifyToken,getSearchHistory)
 
