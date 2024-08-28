@@ -27,6 +27,9 @@ const UserSchema=new mongoose.Schema({
         type:Number,
         default:0,
     },
+    searchHistory:{
+        type:[{type:"String"}]
+    },
     followedUser:{
         type:[{type:"String",ref:"Users"}]
     },

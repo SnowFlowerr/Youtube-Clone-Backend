@@ -1,5 +1,5 @@
 import express from 'express';
-import { getUser, updateUser, deleteUser, subscribe, unsubscribe, history, addHistory, like, addToSave, removeFromSave, getCurrentUser, isSubscribe, isLiked, isDisliked, isSaved, isShortsLiked, isShortsDisliked, isShortsSaved, historyShorts, addHistoryShorts, likeShorts, addToSaveShorts, removeFromSaveShorts } from '../controllers/userController.js';
+import { getUser, updateUser, deleteUser, subscribe, unsubscribe, history, addHistory, like, addToSave, removeFromSave, getCurrentUser, isSubscribe, isLiked, isDisliked, isSaved, isShortsLiked, isShortsDisliked, isShortsSaved, historyShorts, addHistoryShorts, likeShorts, addToSaveShorts, removeFromSaveShorts, getSubscribes, addToSearchHistory, removeFromSearchHistory, getSearchHistory } from '../controllers/userController.js';
 import { verifyToken } from '../verifyToken.js';
 
 const router=express.Router();
@@ -18,6 +18,8 @@ router.put('/subscribe/:id',verifyToken,subscribe)
 router.put('/unsubscribe/:id',verifyToken,unsubscribe)
 // is user subscribed
 router.get('/issubscribe/:id',verifyToken,isSubscribe)
+// get subscribed
+router.get('/getsubscriber',verifyToken,getSubscribes)
 // is video liked
 router.get('/isliked/:id',verifyToken,isLiked)
 // is video disliked
@@ -34,6 +36,13 @@ router.get('/like',verifyToken,like)
 router.put('/addsave/:id',verifyToken,addToSave)
 // remove from saved
 router.put('/removesave/:id',verifyToken,removeFromSave)
+
+// add to searchHistory
+router.put('/addsearchHistory/:id',verifyToken,addToSearchHistory)
+// remove from searchHistory
+router.put('/removesearchHistory/:id',verifyToken,removeFromSearchHistory)
+// get searchHistory
+router.get('/getsearchHistory',verifyToken,getSearchHistory)
 
 
 // is shorts liked

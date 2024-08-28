@@ -42,7 +42,7 @@ export const deleteUser=async(req,res,next)=>{
 export const getUser=async(req,res,next)=>{
     try{
         const user=await Users.findById(req.params.id);
-        const {password,history,shortsHistory,followedUser,liked,shortsLiked,disliked,shortsDisliked,saved,shortsSaved,...others}=user._doc;
+        const {password,history,shortsHistory,searchHistory,followedUser,liked,shortsLiked,disliked,shortsDisliked,saved,shortsSaved,...others}=user._doc;
         res.status(200).json({...others})
     }
     catch(err){
@@ -52,7 +52,7 @@ export const getUser=async(req,res,next)=>{
 export const getCurrentUser=async(req,res,next)=>{
     try{
         const user=await Users.findById(req.user.id);
-        const {password,history,shortsHistory,followedUser,liked,shortsLiked,disliked,shortsDisliked,saved,shortsSaved,...others}=user._doc;
+        const {password,history,shortsHistory,searchHistory,followedUser,liked,shortsLiked,disliked,shortsDisliked,saved,shortsSaved,...others}=user._doc;
         res.status(200).json({...others})
     }
     catch(err){
@@ -88,6 +88,16 @@ export const unsubscribe=async(req,res,next)=>{
             $inc:{followers:-1}
         });
         res.status(200).json("Unubscribed")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const getSubscribes=async(req,res,next)=>{
+    try{
+        const subs = await Users.findById(req.user.id).populate("followedUser");
+        const {password,history,shortsHistory,searchHistory,liked,shortsLiked,disliked,shortsDisliked,saved,shortsSaved,...others}=subs._doc;
+        res.status(200).json(others)
     }
     catch(err){
         next(err)
@@ -319,6 +329,38 @@ export const removeFromSaveShorts=async(req,res,next)=>{
             $pull:{shortsSaved:req.params.id}
         });
         res.status(200).json("removed from saved")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const addToSearchHistory=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $push:{searchHistory:req.params.id}
+        });
+        res.status(200).json("added to searchHistory")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const removeFromSearchHistory=async(req,res,next)=>{
+    try{
+        await Users.findByIdAndUpdate(req.user.id,{
+            $pull:{searchHistory:req.params.id}
+        });
+        res.status(200).json("removed from searchHistory")
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const getSearchHistory=async(req,res,next)=>{
+    try{
+        const {searchHistory} = await Users.findById(req.user.id);
+        // const {password,history,shortsHistory,followedUser,liked,shortsLiked,disliked,shortsDisliked,saved,shortsSaved,...others}=search._doc;
+        res.status(200).json(searchHistory)
     }
     catch(err){
         next(err)
