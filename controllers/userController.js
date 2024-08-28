@@ -290,8 +290,8 @@ export const likeShorts=async(req,res,next)=>{
 }
 export const historyShorts=async(req,res,next)=>{
     try{
-        const history=await Users.findById(req.user.id).populate(["shortsHistory","shortsLiked","shortsDisliked","shortsSaved"]);
-        const {password,liked,disliked,saved,...others}=history._doc;
+        const shistory=await Users.findById(req.user.id).populate(["shortsHistory","shortsLiked","shortsDisliked","shortsSaved"]);
+        const {password,liked,disliked,saved,history,followedUser,...others}=shistory._doc;
         res.status(200).json(others)
     }
     catch(err){
