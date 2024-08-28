@@ -66,7 +66,7 @@ export const getAllVideos=async(req,res,next)=>{
     // console.log("ewfewaf")
     const {limit,skip}=req.query;
     try{
-        const videos=await Videos.find().limit(limit).skip(skip)
+        const videos=await Videos.find().sort({ _id: -1 }).limit(limit).skip(skip)
         return res.status(200).json(videos)
     }
     catch(err){

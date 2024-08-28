@@ -78,7 +78,7 @@ export const getAllShorts=async(req,res,next)=>{
     const {limit,skip}=req.query;
     try{
         // const videos=await Shorts.aggregate({ $sample: { size: 2 } })
-        const videos=await Shorts.find().limit(limit).skip(skip)
+        const videos=await Shorts.find().sort({ _id: -1 }).limit(limit).skip(skip)
         return res.status(200).json(videos)
     }
     catch(err){

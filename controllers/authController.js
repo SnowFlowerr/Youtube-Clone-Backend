@@ -25,13 +25,13 @@ export const signup = async (req, res, next) => {
         console.log("User signup Is Successful")
 
         const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
-        const { password, history, followedUser, liked, disliked, followers, saved, ...others } = user._doc;
+        const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
         // console.log(jwtToken)
         res.cookie("access_token", jwtToken, {
-            path:"/",
+            path: "/",
             secure: true,
             sameSite: 'none',
-        }).status(200).json({ ...others, access_token: jwtToken });
+        }).status(200).json(others);
     }
     catch (err) {
         next(addError(500, 'Not able to create !'))
@@ -65,13 +65,48 @@ export const login = async (req, res, next) => {
         console.log("User signin Is Successful")
 
         const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
-        const { password, history, followedUser, liked, disliked, followers, ...others } = user._doc;
+        const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
         // console.log(jwtToken)
         res.cookie("access_token", jwtToken, {
-            path:"/",
+            path: "/",
             secure: true,
             sameSite: 'none',
-        }).status(200).json({ ...others, access_token: jwtToken });
+        }).status(200).json(others);
+
+    }
+    catch (err) {
+        next(err);
+    }
+}
+
+
+export const googlelogin = async (req, res, next) => {
+    try {
+        const checkEmail = await User.findOne({ email: req.body.email })
+        if (checkEmail) {
+            const user = checkEmail
+            const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
+            const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
+            // console.log(jwtToken)
+            return res.cookie("access_token", jwtToken, {
+                path: "/",
+                secure: true,
+                sameSite: 'none',
+            }).status(200).json(others);
+        }
+        else {
+            const newUser = new User({ ...req.body })
+            const user = await User.create(newUser)
+            const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
+            const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
+            // console.log(jwtToken)
+            return res.cookie("access_token", jwtToken, {
+                path: "/",
+                secure: true,
+                sameSite: 'none',
+            }).status(200).json(others);
+
+        }
 
     }
     catch (err) {

@@ -337,6 +337,9 @@ export const removeFromSaveShorts=async(req,res,next)=>{
 export const addToSearchHistory=async(req,res,next)=>{
     try{
         await Users.findByIdAndUpdate(req.user.id,{
+            $pull:{searchHistory:req.params.id}
+        });
+        await Users.findByIdAndUpdate(req.user.id,{
             $push:{searchHistory:req.params.id}
         });
         res.status(200).json("added to searchHistory")
