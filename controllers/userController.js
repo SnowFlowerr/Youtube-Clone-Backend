@@ -342,7 +342,8 @@ export const addToSearchHistory=async(req,res,next)=>{
         await Users.findByIdAndUpdate(req.user.id,{
             $push:{searchHistory:req.params.id}
         });
-        res.status(200).json("added to searchHistory")
+        const {searchHistory}=await Users.findById(req.user.id);
+        res.status(200).json(searchHistory)
     }
     catch(err){
         next(err)
@@ -353,7 +354,8 @@ export const removeFromSearchHistory=async(req,res,next)=>{
         await Users.findByIdAndUpdate(req.user.id,{
             $pull:{searchHistory:req.params.id}
         });
-        res.status(200).json("removed from searchHistory")
+        const {searchHistory}=await Users.findById(req.user.id);
+        res.status(200).json(searchHistory)
     }
     catch(err){
         next(err)
@@ -362,7 +364,6 @@ export const removeFromSearchHistory=async(req,res,next)=>{
 export const getSearchHistory=async(req,res,next)=>{
     try{
         const {searchHistory} = await Users.findById(req.user.id);
-        // const {password,history,shortsHistory,followedUser,liked,shortsLiked,disliked,shortsDisliked,saved,shortsSaved,...others}=search._doc;
         res.status(200).json(searchHistory)
     }
     catch(err){
