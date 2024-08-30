@@ -75,10 +75,11 @@ export const deleteShorts=async(req,res,next)=>{
 }
 
 export const getAllShorts=async(req,res,next)=>{
-    const {limit,skip}=req.query;
+    let {limit,skip}=req.query;
+    limit=limit-0
     try{
-        // const videos=await Shorts.aggregate({ $sample: { size: 2 } })
-        const videos=await Shorts.find().sort({ _id: -1 }).limit(limit).skip(skip)
+        const videos=await Shorts.aggregate([{ $sample: { size: limit } }])
+        // const videos=await Shorts.find().sort({ _id: -1 }).limit(limit).skip(skip)
         return res.status(200).json(videos)
     }
     catch(err){
