@@ -86,6 +86,7 @@ export const addViews=async(req,res,next)=>{
     }
 }
 export const getAllCategory=async(req,res,next)=>{
+    
     try{
         const videos=await Videos.find({category:req.params.id}).limit(10)
         

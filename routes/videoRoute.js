@@ -17,9 +17,9 @@ router.get('/',getAllVideos)
 // increase Views
 router.put('/view/:id',addViews)
 // searched Video using category
-router.get('/category/:id',verifyToken,getAllCategory)
+router.get('/category/:id',getAllCategory)
 // searched Video
-router.get('/search/:id',verifyToken,getSearchVideo)
+router.get('/search/:id',getSearchVideo)
 // like Video
 router.put('/like/:id',verifyToken,like)
 // dislike Video

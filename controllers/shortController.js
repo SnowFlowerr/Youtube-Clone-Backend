@@ -111,7 +111,6 @@ export const getAllCategory=async(req,res,next)=>{
 export const getSearchShorts=async(req,res,next)=>{
     try{
         const videos=await Shorts.find({"title" : {$regex : req.params.id,$options:"i"}})
-
         return res.status(200).json(videos)
     }
     catch(err){
