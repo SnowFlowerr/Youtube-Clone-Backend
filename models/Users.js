@@ -23,6 +23,12 @@ const UserSchema=new mongoose.Schema({
         type:String,
         default:"img"
     },
+    bannerImg:{
+        type:String,
+    },
+    channelInfo:{
+        type:String,
+    },
     followers:{
         type:Number,
         default:0,

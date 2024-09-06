@@ -4,8 +4,7 @@ import Users from "../models/Users.js";
 
 export const createShorts=async(req,res,next)=>{
     try{
-        const {name}=await Users.findById(req.user.id)
-        const newVideo =new Shorts({userId:req.user.id,...req.body,name})
+        const newVideo =new Shorts({userId:req.user.id,...req.body})
         const savedVideo=await newVideo.save();
         return res.status(200).json(savedVideo);
     }
@@ -80,6 +79,18 @@ export const getAllShorts=async(req,res,next)=>{
     try{
         const videos=await Shorts.aggregate([{ $sample: { size: limit } }])
         // const videos=await Shorts.find().sort({ _id: -1 }).limit(limit).skip(skip)
+        return res.status(200).json(videos)
+    }
+    catch(err){
+        next(err)
+    }
+}
+export const CurrentUserShorts=async(req,res,next)=>{
+    let {limit,skip}=req.query;
+    // limit=limit-0
+    try{
+        // const videos=await Shorts.aggregate([{ $sample: { size: limit } }])
+        const videos=await Shorts.find({userId:req.params.id}).sort({ _id: -1 }).limit(limit).skip(skip)
         return res.status(200).json(videos)
     }
     catch(err){

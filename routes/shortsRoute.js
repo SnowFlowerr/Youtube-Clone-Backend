@@ -1,6 +1,6 @@
 import express from 'express';
 import { verifyToken } from '../verifyToken.js';
-import { addViews, createShorts, deleteShorts, dislike, getAllCategory, getAllShorts, getOneShorts, getSearchShorts, getShorts, like, undislike, unlike, updateShorts } from '../controllers/shortController.js';
+import { addViews, createShorts, CurrentUserShorts, deleteShorts, dislike, getAllCategory, getAllShorts, getOneShorts, getSearchShorts, getShorts, like, undislike, unlike, updateShorts } from '../controllers/shortController.js';
 
 const router=express.Router();
 // create video
@@ -29,5 +29,7 @@ router.put('/dislike/:id',verifyToken,dislike)
 router.put('/unlike/:id',verifyToken,unlike)
 // undislike Video
 router.put('/undislike/:id',verifyToken,undislike)
+// current user Video
+router.get('/allcurrentshorts/:id',CurrentUserShorts)
 
 export default router;
