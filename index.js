@@ -5,6 +5,7 @@ import userRoutes from './routes/userRoute.js'
 import videoRoutes from './routes/videoRoute.js'
 import shortsRoutes from './routes/shortsRoute.js'
 import authRoutes from './routes/auth.js'
+import commentsRoute from './routes/commentsRoute.js'
 import cookieParser from 'cookie-parser';
 import cors from "cors"
 
@@ -30,10 +31,11 @@ const connectApp=()=>{
 }
 
 
+app.use('/api/auth',authRoutes)
 app.use('/api/users',userRoutes)
 app.use('/api/videos',videoRoutes)
 app.use('/api/shorts',shortsRoutes)
-app.use('/api/auth',authRoutes)
+app.use('/api/comments',commentsRoute)
 
 app.use((err,req,res,next)=>{
     const status=err.status || 500;
