@@ -31,7 +31,7 @@ export const signup = async (req, res, next) => {
             path: "/",
             secure: true,
             sameSite: 'none',
-            expires: 3650
+            maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
         }).status(200).json(others);
     }
     catch (err) {
@@ -72,7 +72,7 @@ export const login = async (req, res, next) => {
             path: "/",
             secure: true,
             sameSite: 'none',
-            expires: 3650
+            maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
         }).status(200).json(others);
 
     }
@@ -94,6 +94,7 @@ export const googlelogin = async (req, res, next) => {
                 path: "/",
                 secure: true,
                 sameSite: 'none',
+                maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
         }
         else {
@@ -106,6 +107,7 @@ export const googlelogin = async (req, res, next) => {
                 path: "/",
                 secure: true,
                 sameSite: 'none',
+                maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
 
         }
