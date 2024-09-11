@@ -104,12 +104,15 @@ export const googlelogin = async (req, res, next) => {
             const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
             const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
             // console.log(jwtToken)
+            const tenYearsFromNow = new Date();
+tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
             return res.cookie("access_token", jwtToken, {
                 path: "/",
                 secure: true,
                 sameSite: 'none',
                 httpOnly:true,
-                maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
+                expires: tenYearsFromNow,
+                // maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
         }
         else {
@@ -118,12 +121,15 @@ export const googlelogin = async (req, res, next) => {
             const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
             const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
             // console.log(jwtToken)
+            const tenYearsFromNow = new Date();
+tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
             return res.cookie("access_token", jwtToken, {
                 path: "/",
                 secure: true,
                 sameSite: 'none',
                 httpOnly:true,
-                maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
+                expires: tenYearsFromNow,
+                // maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
 
         }
