@@ -31,6 +31,7 @@ export const signup = async (req, res, next) => {
             path: "/",
             secure: true,
             sameSite: 'none',
+            expires: 3650
         }).status(200).json(others);
     }
     catch (err) {
@@ -71,6 +72,7 @@ export const login = async (req, res, next) => {
             path: "/",
             secure: true,
             sameSite: 'none',
+            expires: 3650
         }).status(200).json(others);
 
     }
