@@ -28,6 +28,7 @@ export const signup = async (req, res, next) => {
         const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
         // console.log(jwtToken)
         res.cookie("access_token", jwtToken, {
+            domain: '.honest-stillness-production.up.railway.app',
             path: "/",
             secure: true,
             httpOnly:true,
@@ -70,6 +71,7 @@ export const login = async (req, res, next) => {
         const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
         // console.log(jwtToken)
         res.cookie("access_token", jwtToken, {
+            domain: '.honest-stillness-production.up.railway.app',
             path: "/",
             secure: true,
             httpOnly:true,
@@ -84,7 +86,7 @@ export const login = async (req, res, next) => {
 }
 export const logout = async (req, res, next) => {
     try {
-        return res.cookie('access_token', '', { expires: new Date(0), path: '/' }).status(200).json('Logout');
+        return res.cookie('access_token', '', { maxAge: 0, path: '/' }).status(200).json('Logout');
     }
     catch (err) {
         next(err);
@@ -101,6 +103,7 @@ export const googlelogin = async (req, res, next) => {
             const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
             // console.log(jwtToken)
             return res.cookie("access_token", jwtToken, {
+                domain: '.honest-stillness-production.up.railway.app',
                 path: "/",
                 secure: true,
                 httpOnly:true,
@@ -115,6 +118,7 @@ export const googlelogin = async (req, res, next) => {
             const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
             // console.log(jwtToken)
             return res.cookie("access_token", jwtToken, {
+                domain: '.honest-stillness-production.up.railway.app',
                 path: "/",
                 secure: true,
                 httpOnly:true,

@@ -11,6 +11,6 @@ router.post('/login',login)
 // google signin
 router.post('/googlelogin',googlelogin)
 // Logout
-router.delete('/logout',logout)
+router.post('/logout',logout)
 
 export default router;
