@@ -83,6 +83,7 @@ export const login = async (req, res, next) => {
 export const logout = async (req, res, next) => {
     try {
         return res.cookie('access_token', '', { expire: new Date(0), path: '/',
+            domain:".honest-stillness-production.up.railway.app",
             path: "/",
             secure: true,
             sameSite: 'none', }).status(200).json('Logout');
