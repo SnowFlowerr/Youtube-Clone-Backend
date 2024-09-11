@@ -1,5 +1,5 @@
 import express from 'express';
-import { googlelogin, login, signup } from '../controllers/authController.js';
+import { googlelogin, login, logout, signup } from '../controllers/authController.js';
 
 // for creating user
 const router=express.Router();
@@ -10,8 +10,7 @@ router.post('/signup',signup)
 router.post('/login',login)
 // google signin
 router.post('/googlelogin',googlelogin)
-
-// google auth
-// router.post('/login',login)
+// Logout
+router.delete('/logout',logout)
 
 export default router;

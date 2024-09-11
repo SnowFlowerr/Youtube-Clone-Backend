@@ -30,6 +30,7 @@ export const signup = async (req, res, next) => {
         res.cookie("access_token", jwtToken, {
             path: "/",
             secure: true,
+            httpOnly:true,
             sameSite: 'none',
             maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
         }).status(200).json(others);
@@ -71,10 +72,19 @@ export const login = async (req, res, next) => {
         res.cookie("access_token", jwtToken, {
             path: "/",
             secure: true,
+            httpOnly:true,
             sameSite: 'none',
             maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
         }).status(200).json(others);
 
+    }
+    catch (err) {
+        next(err);
+    }
+}
+export const logout = async (req, res, next) => {
+    try {
+        return res.cookie('access_token', '', { expires: new Date(0), path: '/' }).status(200).json('Logout');
     }
     catch (err) {
         next(err);
@@ -93,6 +103,7 @@ export const googlelogin = async (req, res, next) => {
             return res.cookie("access_token", jwtToken, {
                 path: "/",
                 secure: true,
+                httpOnly:true,
                 sameSite: 'none',
                 maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
@@ -106,6 +117,7 @@ export const googlelogin = async (req, res, next) => {
             return res.cookie("access_token", jwtToken, {
                 path: "/",
                 secure: true,
+                httpOnly:true,
                 sameSite: 'none',
                 maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
