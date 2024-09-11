@@ -1,4 +1,4 @@
-import Comments from "../models/comments.js"
+import Comments from "../models/Comments.js"
 
 export const addComment=async(req,res,next)=>{
     const {comment}=req.body
