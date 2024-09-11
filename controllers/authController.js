@@ -31,6 +31,7 @@ export const signup = async (req, res, next) => {
             path: "/",
             secure: true,
             sameSite: 'none',
+            httpOnly:true,
             maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
         }).status(200).json(others);
     }
@@ -72,6 +73,7 @@ export const login = async (req, res, next) => {
             path: "/",
             secure: true,
             sameSite: 'none',
+            httpOnly:true,
             maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
         }).status(200).json(others);
 
@@ -83,7 +85,7 @@ export const login = async (req, res, next) => {
 export const logout = async (req, res, next) => {
     try {
         return res.cookie('access_token', '', { expire: new Date(0), path: '/',
-            domain:".honest-stillness-production.up.railway.app",
+            httpOnly:true,
             path: "/",
             secure: true,
             sameSite: 'none', }).status(200).json('Logout');
@@ -106,6 +108,7 @@ export const googlelogin = async (req, res, next) => {
                 path: "/",
                 secure: true,
                 sameSite: 'none',
+                httpOnly:true,
                 maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
         }
@@ -119,6 +122,7 @@ export const googlelogin = async (req, res, next) => {
                 path: "/",
                 secure: true,
                 sameSite: 'none',
+                httpOnly:true,
                 maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
 
