@@ -27,12 +27,15 @@ export const signup = async (req, res, next) => {
         const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
         const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
         // console.log(jwtToken)
+        const tenYearsFromNow = new Date();
+        tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
         res.cookie("access_token", jwtToken, {
             path: "/",
             secure: true,
             sameSite: 'none',
-            httpOnly:true,
-            maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
+            httpOnly: true,
+            expires: tenYearsFromNow,
+            // maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
         }).status(200).json(others);
     }
     catch (err) {
@@ -69,12 +72,15 @@ export const login = async (req, res, next) => {
         const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
         const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
         // console.log(jwtToken)
+        const tenYearsFromNow = new Date();
+        tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
         res.cookie("access_token", jwtToken, {
             path: "/",
             secure: true,
             sameSite: 'none',
-            httpOnly:true,
-            maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
+            httpOnly: true,
+            expires: tenYearsFromNow,
+            // maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
         }).status(200).json(others);
 
     }
@@ -84,11 +90,13 @@ export const login = async (req, res, next) => {
 }
 export const logout = async (req, res, next) => {
     try {
-        return res.cookie('access_token', '', { expire: new Date(0), path: '/',
-            httpOnly:true,
+        return res.cookie('access_token', '', {
+            expire: new Date(0), path: '/',
+            httpOnly: true,
             path: "/",
             secure: true,
-            sameSite: 'none', }).status(200).json('Logout');
+            sameSite: 'none',
+        }).status(200).json('Logout');
     }
     catch (err) {
         next(err);
@@ -105,12 +113,12 @@ export const googlelogin = async (req, res, next) => {
             const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
             // console.log(jwtToken)
             const tenYearsFromNow = new Date();
-tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
+            tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
             return res.cookie("access_token", jwtToken, {
                 path: "/",
                 secure: true,
                 sameSite: 'none',
-                httpOnly:true,
+                httpOnly: true,
                 expires: tenYearsFromNow,
                 // maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
@@ -122,12 +130,12 @@ tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
             const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
             // console.log(jwtToken)
             const tenYearsFromNow = new Date();
-tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
+            tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
             return res.cookie("access_token", jwtToken, {
                 path: "/",
                 secure: true,
                 sameSite: 'none',
-                httpOnly:true,
+                httpOnly: true,
                 expires: tenYearsFromNow,
                 // maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
