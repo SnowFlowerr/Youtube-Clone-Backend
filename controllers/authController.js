@@ -31,7 +31,7 @@ export const signup = async (req, res, next) => {
             domain: '.honest-stillness-production.up.railway.app',
             path: "/",
             secure: true,
-            httpOnly:true,
+            httpOnly:false,
             sameSite: 'none',
             maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
         }).status(200).json(others);
@@ -74,7 +74,7 @@ export const login = async (req, res, next) => {
             domain: '.honest-stillness-production.up.railway.app',
             path: "/",
             secure: true,
-            httpOnly:true,
+            httpOnly:false,
             sameSite: 'none',
             maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
         }).status(200).json(others);
@@ -109,7 +109,7 @@ export const googlelogin = async (req, res, next) => {
                 domain: '.honest-stillness-production.up.railway.app',
                 path: "/",
                 secure: true,
-                httpOnly:true,
+                httpOnly:false,
                 sameSite: 'none',
                 maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
@@ -124,7 +124,7 @@ export const googlelogin = async (req, res, next) => {
                 domain: '.honest-stillness-production.up.railway.app',
                 path: "/",
                 secure: true,
-                httpOnly:true,
+                httpOnly:false,
                 sameSite: 'none',
                 maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
             }).status(200).json(others);
