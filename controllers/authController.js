@@ -86,7 +86,7 @@ export const login = async (req, res, next) => {
 }
 export const logout = async (req, res, next) => {
     try {
-        return res.cookie('access_token', '', { maxAge: 0, path: '/',path: "/",
+        return res.cookie('access_token', '', { expire: new Date(0), path: '/',
             secure: true,
             httpOnly:true,
             sameSite: 'none', }).status(200).json('Logout');
