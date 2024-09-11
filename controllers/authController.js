@@ -28,7 +28,6 @@ export const signup = async (req, res, next) => {
         const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
         // console.log(jwtToken)
         res.cookie("access_token", jwtToken, {
-            domain: '.honest-stillness-production.up.railway.app',
             path: "/",
             secure: true,
             sameSite: 'none',
@@ -70,7 +69,6 @@ export const login = async (req, res, next) => {
         const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
         // console.log(jwtToken)
         res.cookie("access_token", jwtToken, {
-            domain: '.honest-stillness-production.up.railway.app',
             path: "/",
             secure: true,
             sameSite: 'none',
@@ -104,7 +102,6 @@ export const googlelogin = async (req, res, next) => {
             const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
             // console.log(jwtToken)
             return res.cookie("access_token", jwtToken, {
-                domain: '.honest-stillness-production.up.railway.app',
                 path: "/",
                 secure: true,
                 sameSite: 'none',
@@ -118,7 +115,6 @@ export const googlelogin = async (req, res, next) => {
             const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
             // console.log(jwtToken)
             return res.cookie("access_token", jwtToken, {
-                domain: '.honest-stillness-production.up.railway.app',
                 path: "/",
                 secure: true,
                 sameSite: 'none',
