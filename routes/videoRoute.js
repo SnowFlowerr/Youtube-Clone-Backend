@@ -31,6 +31,6 @@ router.put('/undislike/:id',verifyToken,undislike)
 // current user Video
 router.get('/allcurrentvideos/:id',CurrentUserVideos)
 // random Video
-router.get('/random',getRandomVideos)
+router.get('/random/vid',getRandomVideos)
 
 export default router;
