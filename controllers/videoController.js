@@ -72,6 +72,18 @@ export const getAllVideos=async(req,res,next)=>{
         next(err)
     }
 }
+export const getRandomVideos=async(req,res,next)=>{
+    let {limit,skip}=req.query;
+    limit=limit-0
+    try{
+        const videos=await Videos.aggregate([{ $sample: { size: limit } }])
+        // const videos=await Shorts.find().sort({ _id: -1 }).limit(limit).skip(skip)
+        return res.status(200).json(videos)
+    }
+    catch(err){
+        next(err)
+    }
+}
 
 export const CurrentUserVideos=async(req,res,next)=>{
     let {limit,skip}=req.query;
