@@ -64,7 +64,7 @@ export const deleteShorts=async(req,res,next)=>{
             return next(addError(404,"Video Not Present"))
         }
         if(video.userId===req.user.id){
-            await Videos.findByIdAndDelete(req.params.id,)
+            await Shorts.findByIdAndDelete(req.params.id,)
         }
         return res.status(200).json("Videos is Removed")
     }
