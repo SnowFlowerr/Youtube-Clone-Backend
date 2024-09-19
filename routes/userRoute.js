@@ -1,6 +1,11 @@
 import express from 'express';
-import { getUser, updateUser, deleteUser, subscribe, unsubscribe, history, addHistory, like, addToSave, removeFromSave, getCurrentUser, isSubscribe, isLiked, isDisliked, isSaved, isShortsLiked, isShortsDisliked, isShortsSaved, historyShorts, addHistoryShorts, likeShorts, addToSaveShorts, removeFromSaveShorts, getSubscribes, addToSearchHistory, removeFromSearchHistory, getSearchHistory } from '../controllers/userController.js';
 import { verifyToken } from '../verifyToken.js';
+
+import { getUser, updateUser, deleteUser, getCurrentUser} from '../controllers/userController.js';
+
+import { addSubscribed, getAllSubscribed, isSubscribed, removeSubscribed } from '../controllers/subscribedController.js';
+
+import { addSearchHistory, getAllSearchHistory, removeSearchHistory } from '../controllers/SearchHisController.js';
 
 const router=express.Router();
 
@@ -12,55 +17,26 @@ router.delete('/delete/:id',verifyToken,deleteUser)
 router.get('/get/:id',getUser)
 // find or get current a user
 router.get('/get',verifyToken,getCurrentUser)
+
+
 // Subscribe a user
-router.put('/subscribe/:id',verifyToken,subscribe)
+router.put('/subscribe/:id',verifyToken, addSubscribed)
 // Unsubscribe a user
-router.put('/unsubscribe/:id',verifyToken,unsubscribe)
+router.delete('/unsubscribe/:id',verifyToken, removeSubscribed)
 // is user subscribed
-router.get('/issubscribe/:id',verifyToken,isSubscribe)
+router.get('/issubscribe/:id',verifyToken, isSubscribed)
 // get subscribed
-router.get('/getsubscriber',verifyToken,getSubscribes)
-// is video liked
-router.get('/isliked/:id',verifyToken,isLiked)
-// is video disliked
-router.get('/isdisliked/:id',verifyToken,isDisliked)
-// is video saved
-router.get('/issaved/:id',verifyToken,isSaved)
-// history
-router.get('/history',verifyToken,history)
-// Add history
-router.put('/history/:id',verifyToken,addHistory)
-// add liked video
-router.get('/like',verifyToken,like)
-// add to saved
-router.put('/addsave/:id',verifyToken,addToSave)
-// remove from saved
-router.put('/removesave/:id',verifyToken,removeFromSave)
+router.get('/getsubscriber',verifyToken,getAllSubscribed)
+
 
 // add to searchHistory
-router.put('/addsearchHistory/:id',verifyToken,addToSearchHistory)
+router.put('/addsearchHistory/:id',verifyToken,addSearchHistory)
 // remove from searchHistory
-router.delete('/removesearchHistory/:id',verifyToken,removeFromSearchHistory)
+router.delete('/removesearchHistory/:id',verifyToken,removeSearchHistory)
 // get searchHistory
-router.get('/getsearchHistory',verifyToken,getSearchHistory)
+router.get('/getsearchHistory',verifyToken,getAllSearchHistory)
 
 
-// is shorts liked
-router.get('/islikedshorts/:id',verifyToken,isShortsLiked)
-// is shorts disliked
-router.get('/isdislikedshorts/:id',verifyToken,isShortsDisliked)
-// is shorts saved
-router.get('/issavedshorts/:id',verifyToken,isShortsSaved)
-// history
-router.get('/shortshistory',verifyToken,historyShorts)
-// Add history
-router.put('/shortshistory/:id',verifyToken,addHistoryShorts)
-// add shorts video
-router.get('/shortslike',verifyToken,likeShorts)
-// add to saved
-router.put('/addsaveshorts/:id',verifyToken,addToSaveShorts)
-// remove from saved
-router.put('/removesaveshorts/:id',verifyToken,removeFromSaveShorts)
 
 
 export default router;

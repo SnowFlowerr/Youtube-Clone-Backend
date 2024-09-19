@@ -8,7 +8,6 @@ const commentsSchema=new mongoose.Schema({
     },
     videoId:{
         type:String,
-        ref:"Users",
         required:true,
     },
     comment:{

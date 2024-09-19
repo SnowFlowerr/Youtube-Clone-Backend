@@ -33,7 +33,7 @@ export const updateVideo=async(req,res,next)=>{
 }
 export const getVideo=async(req,res,next)=>{
     try{
-        const videos = await Videos.findById(req.params.id);
+        const videos = await Videos.findById(req.params.id).populate("userId");
         if(!videos){
             return next(addError(404,"Video Not found !"))
         }
@@ -65,7 +65,7 @@ export const getAllVideos=async(req,res,next)=>{
     // console.log("ewfewaf")
     const {limit,skip}=req.query;
     try{
-        const videos=await Videos.find().sort({ _id: -1 }).limit(limit).skip(skip)
+        const videos=await Videos.find().sort({ _id: -1 }).populate("userId").limit(limit).skip(skip)
         return res.status(200).json(videos)
     }
     catch(err){
@@ -122,65 +122,8 @@ export const getAllCategory=async(req,res,next)=>{
 }
 export const getSearchVideo=async(req,res,next)=>{
     try{
-        const videos=await Videos.find({"title" : {$regex : req.params.id,$options:"i"}})
-
+        const videos=await Videos.find({"title" : {$regex : req.params.id,$options:"i"}}).populate('userId')
         return res.status(200).json(videos)
-    }
-    catch(err){
-        next(err)
-    }
-}
-export const like=async(req,res,next)=>{
-    try{
-        await Users.findByIdAndUpdate(req.user.id,{
-            $push:{liked:req.params.id}
-        });
-        await Videos.findByIdAndUpdate(req.params.id,{
-            $inc:{likes:1}
-        });
-        res.status(200).json("liked")
-    }
-    catch(err){
-        next(err)
-    }
-}
-export const unlike=async(req,res,next)=>{
-    try{
-        await Users.findByIdAndUpdate(req.user.id,{
-            $pull:{liked:req.params.id}
-        });
-        await Videos.findByIdAndUpdate(req.params.id,{
-            $inc:{likes:-1}
-        });
-        res.status(200).json("unliked")
-    }
-    catch(err){
-        next(err)
-    }
-}
-export const dislike=async(req,res,next)=>{
-    try{
-        await Users.findByIdAndUpdate(req.user.id,{
-            $push:{disliked:req.params.id}
-        });
-        await Videos.findByIdAndUpdate(req.params.id,{
-            $inc:{dislikes:1}
-        });
-        res.status(200).json("disliked")
-    }
-    catch(err){
-        next(err)
-    }
-}
-export const undislike=async(req,res,next)=>{
-    try{
-        await Users.findByIdAndUpdate(req.user.id,{
-            $pull:{disliked:req.params.id}
-        });
-        await Videos.findByIdAndUpdate(req.params.id,{
-            $inc:{dislikes:-1}
-        });
-        res.status(200).json("undisliked")
     }
     catch(err){
         next(err)

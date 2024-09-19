@@ -121,64 +121,8 @@ export const getAllCategory=async(req,res,next)=>{
 }
 export const getSearchShorts=async(req,res,next)=>{
     try{
-        const videos=await Shorts.find({"title" : {$regex : req.params.id,$options:"i"}})
+        const videos=await Shorts.find({"title" : {$regex : req.params.id,$options:"i"}}).populate('userId')
         return res.status(200).json(videos)
-    }
-    catch(err){
-        next(err)
-    }
-}
-export const like=async(req,res,next)=>{
-    try{
-        await Users.findByIdAndUpdate(req.user.id,{
-            $push:{shortsLiked:req.params.id}
-        });
-        await Shorts.findByIdAndUpdate(req.params.id,{
-            $inc:{likes:1}
-        });
-        res.status(200).json("liked")
-    }
-    catch(err){
-        next(err)
-    }
-}
-export const unlike=async(req,res,next)=>{
-    try{
-        await Users.findByIdAndUpdate(req.user.id,{
-            $pull:{shortsLiked:req.params.id}
-        });
-        await Shorts.findByIdAndUpdate(req.params.id,{
-            $inc:{likes:-1}
-        });
-        res.status(200).json("unliked")
-    }
-    catch(err){
-        next(err)
-    }
-}
-export const dislike=async(req,res,next)=>{
-    try{
-        await Users.findByIdAndUpdate(req.user.id,{
-            $push:{shortsDisliked:req.params.id}
-        });
-        await Shorts.findByIdAndUpdate(req.params.id,{
-            $inc:{dislikes:1}
-        });
-        res.status(200).json("disliked")
-    }
-    catch(err){
-        next(err)
-    }
-}
-export const undislike=async(req,res,next)=>{
-    try{
-        await Users.findByIdAndUpdate(req.user.id,{
-            $pull:{shortsDisliked:req.params.id}
-        });
-        await Shorts.findByIdAndUpdate(req.params.id,{
-            $inc:{dislikes:-1}
-        });
-        res.status(200).json("undisliked")
     }
     catch(err){
         next(err)

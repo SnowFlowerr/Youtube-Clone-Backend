@@ -25,7 +25,7 @@ export const signup = async (req, res, next) => {
         console.log("User signup Is Successful")
 
         const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
-        const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
+        const { password, ...others } = user._doc;
         // console.log(jwtToken)
         const tenYearsFromNow = new Date();
         tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
@@ -70,7 +70,7 @@ export const login = async (req, res, next) => {
         console.log("User signin Is Successful")
 
         const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
-        const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
+        const { password, ...others } = user._doc;
         // console.log(jwtToken)
         const tenYearsFromNow = new Date();
         tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
@@ -110,7 +110,7 @@ export const googlelogin = async (req, res, next) => {
         if (checkEmail) {
             const user = checkEmail
             const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
-            const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
+            const { password, ...others } = user._doc;
             // console.log(jwtToken)
             const tenYearsFromNow = new Date();
             tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
@@ -127,7 +127,7 @@ export const googlelogin = async (req, res, next) => {
             const newUser = new User({ ...req.body })
             const user = await User.create(newUser)
             const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
-            const { password, history, shortsHistory, followedUser, liked, shortsLiked, shortsSaved, saved, disliked, shortsDisliked, followers, ...others } = user._doc;
+            const { password, ...others } = user._doc;
             // console.log(jwtToken)
             const tenYearsFromNow = new Date();
             tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
