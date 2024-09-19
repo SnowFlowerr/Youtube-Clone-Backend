@@ -1,4 +1,4 @@
-import VideoHIstory from "../models/videoHIstory.js"
+import VideoHIstory from "../models/VideoHIstory.js"
 
 export const addVideoHIstory=async(req,res,next)=>{
     try{const his=await VideoHIstory.findOne({userId:req.user.id,videoId:req.params.id})

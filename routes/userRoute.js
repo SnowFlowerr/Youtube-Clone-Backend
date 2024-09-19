@@ -5,7 +5,7 @@ import { getUser, updateUser, deleteUser, getCurrentUser} from '../controllers/u
 
 import { addSubscribed, getAllSubscribed, isSubscribed, removeSubscribed } from '../controllers/subscribedController.js';
 
-import { addSearchHistory, getAllSearchHistory, removeSearchHistory } from '../controllers/SearchHisController.js';
+import { addSearchHistory, getAllSearchHistory, removeSearchHistory } from '../controllers/searchHisController.js';
 
 const router=express.Router();
 

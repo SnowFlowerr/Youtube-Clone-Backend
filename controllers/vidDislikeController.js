@@ -1,4 +1,4 @@
-import VideoDislike from "../models/videoDislike.js"
+import VideoDislike from "../models/VideoDislike.js"
 import Videos from "../models/Videos.js"
 
 export const addVideoDislike=async(req,res,next)=>{

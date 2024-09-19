@@ -1,6 +1,5 @@
 import { addError } from "../error.js";
 import Shorts from "../models/Shorts.js";
-import Users from "../models/Users.js";
 
 export const createShorts=async(req,res,next)=>{
     try{

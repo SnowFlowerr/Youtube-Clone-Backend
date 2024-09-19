@@ -1,4 +1,4 @@
-import VideoLiked from "../models/videoLiked.js"
+import VideoLiked from "../models/VideoLiked.js"
 import Videos from "../models/Videos.js"
 
 export const addVideoLiked = async (req, res, next) => {
