@@ -14,7 +14,7 @@ app.use(express.json())
 app.use(cookieParser())
 
 app.use(cors({
-    origin: ['http://localhost:3000', 'https://streamsphere-streaming.vercel.app'],
+    origin: 'https://youtube-clone-snowflowerr.vercel.app',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
