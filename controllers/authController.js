@@ -3,16 +3,15 @@ import User from "../models/Users.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
-
-
 export const signup = async (req, res, next) => {
     try {
+        const {email}=req.body;
         console.log("signup");
         const checkUser = await User.findOne({ username: req.body.username })
         if (checkUser) {
             return next(addError(400, "Username Already Exist"))
         }
-        const checkEmail = await User.findOne({ email: req.body.email })
+        const checkEmail = await User.findOne(email)
         if (checkEmail) {
             return next(addError(400, "Email Already Exist"))
         }
@@ -29,6 +28,7 @@ export const signup = async (req, res, next) => {
         // console.log(jwtToken)
         const tenYearsFromNow = new Date();
         tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
+        
         res.cookie("access_token", jwtToken, {
             path: "/",
             secure: true,
