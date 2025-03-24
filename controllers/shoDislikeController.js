@@ -25,7 +25,7 @@ export const getAllShortsDislike=async(req,res,next)=>{
 }
 export const isShortsDislike=async(req,res,next)=>{
     try{
-        const comm=await ShortsDislike.findOne({videoId:req.params.id})
+        const comm=await ShortsDislike.findOne({videoId: req.params.id, userId: req.user.id})
         if(comm){
             return res.status(200).json(true)
         }

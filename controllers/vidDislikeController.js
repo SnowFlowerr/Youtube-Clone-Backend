@@ -25,7 +25,7 @@ export const getAllVideoDislike=async(req,res,next)=>{
 }
 export const isVideoDislike=async(req,res,next)=>{
     try{
-        const comm=await VideoDislike.findOne({videoId:req.params.id})
+        const comm=await VideoDislike.findOne({videoId: req.params.id, userId: req.user.id})
         if(comm){
             return res.status(200).json(true)
         }

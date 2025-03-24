@@ -21,7 +21,7 @@ export const getAllShortSaved=async(req,res,next)=>{
 }
 export const isShortSaved=async(req,res,next)=>{
     try{
-        const comm=await ShortSaved.findOne({videoId:req.params.id})
+        const comm=await ShortSaved.findOne({videoId: req.params.id, userId: req.user.id})
         if(comm){
             return res.status(200).json(true)
         }

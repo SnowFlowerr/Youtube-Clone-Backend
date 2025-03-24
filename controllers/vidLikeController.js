@@ -25,7 +25,7 @@ export const getAllVideoLiked = async (req, res, next) => {
 }
 export const isVideoLiked = async (req, res, next) => {
     try {
-        const comm = await VideoLiked.findOne({ videoId: req.params.id })
+        const comm = await VideoLiked.findOne({ videoId: req.params.id, userId: req.user.id })
         if (comm) {
             return res.status(200).json(true)
         }

@@ -25,7 +25,7 @@ export const getAllSubscribed=async(req,res,next)=>{
 }
 export const isSubscribed=async(req,res,next)=>{
     try{
-        const comm=await Subscribed.findOne({channelId:req.params.id})
+        const comm=await Subscribed.findOne({channelId:req.params.id, userId:req.user.id})
         if(comm){
             return res.status(200).json(true)
         }
