@@ -6,6 +6,7 @@ import videoRoutes from './routes/videoRoute.js'
 import shortsRoutes from './routes/shortsRoute.js'
 import authRoutes from './routes/auth.js'
 import commentsRoute from './routes/commentsRoute.js'
+import musicRoute from "./routes/music.js"
 import cookieParser from 'cookie-parser';
 import cors from "cors"
 
@@ -36,6 +37,7 @@ app.use('/api/users',userRoutes)
 app.use('/api/videos',videoRoutes)
 app.use('/api/shorts',shortsRoutes)
 app.use('/api/comments',commentsRoute)
+app.use('/api/music',musicRoute)
 
 app.use((err,req,res,next)=>{
     const status=err.status || 500;

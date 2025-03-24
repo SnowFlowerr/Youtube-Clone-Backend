@@ -26,7 +26,7 @@ export const getAllVideoHIstory=async(req,res,next)=>{
 
 export const removeVideoHIstory=async(req,res,next)=>{
     try{
-        const comm=await VideoHIstory.findByIdAndDelete(req.params.id)
+        const comm=await VideoHIstory.findOneAndDelete({videoId:req.params.id,userId:req.user.id})
         return res.status(200).json(comm)
     }
     catch(err){

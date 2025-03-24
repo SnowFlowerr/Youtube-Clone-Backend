@@ -42,7 +42,7 @@ export const removeVideoLiked = async (req, res, next) => {
         await Videos.findByIdAndUpdate(req.params.id, {
             $inc: { likes: -1 }
         })
-        const comm=await VideoLiked.findOne({videoId:req.params.id})
+        const comm=await VideoLiked.findOne({videoId:req.params.id,userId:req.user.id})
         await VideoLiked.findByIdAndDelete(comm._id)
         return res.status(200).json("Liked removed")
     }

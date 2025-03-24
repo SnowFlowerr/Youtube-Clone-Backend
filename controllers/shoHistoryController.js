@@ -24,7 +24,7 @@ export const getAllShortsHistory=async(req,res,next)=>{
 }
 export const removeShortsHistory=async(req,res,next)=>{
     try{
-        const comm=await ShortsHistory.findByIdAndDelete(req.params.id)
+        const comm=await ShortsHistory.findOneAndDelete({videoId:req.params.id,userId:req.user.id})
         return res.status(200).json(comm)
     }
     catch(err){

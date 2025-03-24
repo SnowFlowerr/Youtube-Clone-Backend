@@ -35,7 +35,7 @@ export const isVideoSaved=async(req,res,next)=>{
 }
 export const removeVideoSaved=async(req,res,next)=>{
     try{
-        const comm=await VideoSaved.findOne({videoId:req.params.id})
+        const comm=await VideoSaved.findOne({videoId:req.params.id,userId:req.user.id})
         await VideoSaved.findByIdAndDelete(comm._id)
         return res.status(200).json("Saved removed")
     }
