@@ -1,7 +1,7 @@
 import express from 'express';
 import { verifyToken } from '../verifyToken.js';
 
-import { getUser, updateUser, deleteUser, getCurrentUser} from '../controllers/userController.js';
+import { getUser, updateUser, deleteUser, getCurrentUser, updateCurrentUserPassword} from '../controllers/userController.js';
 
 import { addSubscribed, getAllSubscribed, isSubscribed, removeSubscribed } from '../controllers/subscribedController.js';
 
@@ -11,6 +11,8 @@ const router=express.Router();
 
 // Update a User
 router.put('/update/:id',verifyToken,updateUser)
+// Update current User Password
+router.put('/updatePass',verifyToken,updateCurrentUserPassword)
 // delete a user
 router.delete('/delete/:id',verifyToken,deleteUser)
 // find or get a user

@@ -2,7 +2,6 @@ import { addError } from "../error.js";
 import User from "../models/Users.js"
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import { Resend } from 'resend';
 import dotenv from 'dotenv';
 dotenv.config()
 import Otp from "../models/Otp.js";
