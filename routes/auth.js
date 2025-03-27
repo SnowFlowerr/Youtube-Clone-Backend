@@ -1,5 +1,5 @@
 import express from 'express';
-import { forgotPassword, googlelogin, login, logout, signup } from '../controllers/authController.js';
+import { forgotPassword, googlelogin, login, logout, matchOtp, signup } from '../controllers/authController.js';
 
 // for creating user
 const router=express.Router();
@@ -14,5 +14,7 @@ router.post('/googlelogin',googlelogin)
 router.post('/logout',logout)
 // Password Reset
 router.post('/forget',forgotPassword)
+// Match password
+router.post('/match',matchOtp)
 
 export default router;

@@ -6,7 +6,7 @@ import { Resend } from 'resend';
 import dotenv from 'dotenv';
 dotenv.config()
 import Otp from "../models/Otp.js";
-import { set } from "mongoose";
+import nodemailer from "nodemailer";
 
 
 export const signup = async (req, res, next) => {
@@ -153,6 +153,14 @@ export const googlelogin = async (req, res, next) => {
         next(err);
     }
 }
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD,
+    },
+});
+
 
 export const forgotPassword = async (req, res, next) => {
     const otp=Math.floor(Math.random() * 1000000)
@@ -240,23 +248,65 @@ export const forgotPassword = async (req, res, next) => {
 `
 
     try {
-        const resend = new Resend(process.env.EMAIL);
-        resend.emails.send({
-            from: 'onboarding@resend.dev',
-            to: req.body.email,
-            subject: "Youtube-Clone Password-reset OTP",
-            html: resetPasswordEmail,
-        });
-        const otpData=await Otp.findOne({email:req.body.email})
-        if(otpData){
-            await Otp.findOneAndUpdate({email:req.body.email},{$set:{otp:otp,expiresAt:new Date(Date.now() + 10 * 60 * 1000)}})
+        const main = async () => {
+            try{
+                await transporter.sendMail({
+                    from: `"Youtube-Clone" <${process.env.EMAIL}>`,
+                    to: req.body.email,
+                    subject: "Youtube-Clone Password-reset OTP",
+                    // text:"fgh",
+                    html: resetPasswordEmail,
+                });
+            }
+            catch(err){
+                console.log(err)
+            }
+        }
+        await main()
+        const user=await User.findOne({email:req.body.email})
+        if(user){
+            const otpData=await Otp.findOne({email:req.body.email})
+            if(otpData){
+                await Otp.findOneAndUpdate({email:req.body.email},{$set:{otp:otp,expiresAt:new Date(Date.now() + 10 * 60 * 1000)}})
+            }
+            else{
+                await Otp.create({ email: req.body.email, otp: otp })
+            }
+            return res.status(200).json("successful")
         }
         else{
-            await Otp.create({ email: req.body.email, otp: otp })
+            return next(addError(500, 'User Not Found'))
         }
-        return res.status(200).json("successful")
     }
     catch (err) {
         console.log(err)
+    }
+}
+export const matchOtp = async (req, res, next) => {
+    try {
+        const checkEmail = await Otp.findOne({ email: req.body.email, otp: req.body.otp })
+        const checkUser = await User.findOne({ email: req.body.email})
+        if (checkEmail) {
+            const user = checkUser
+            const jwtToken = jwt.sign({ id: user._id }, process.env.JWT);
+            const { password, ...others } = user._doc;
+            // console.log(jwtToken)
+            const tenYearsFromNow = new Date();
+            tenYearsFromNow.setFullYear(tenYearsFromNow.getFullYear() + 10);
+            return res.cookie("access_token", jwtToken, {
+                path: "/",
+                secure: true,
+                sameSite: 'none',
+                httpOnly: true,
+                expires: tenYearsFromNow,
+                // maxAge: 100 * 365 * 24 * 60 * 60 * 1000, // 100 years in milliseconds
+            }).status(200).json(others);
+        }
+        else {
+            return next(addError(500, 'Wrong OTP'))
+        }
+    }
+    catch (err) {
+        next(err);
     }
 }
