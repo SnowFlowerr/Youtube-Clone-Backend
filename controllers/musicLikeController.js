@@ -2,7 +2,7 @@ import Music from "../models/LikedMusic.js"
 
 export const addMusicLiked = async (req, res, next) => {
     try {
-        const create = await Music.create({ userId: req.user.id, musicId: req.params.id })
+        const create = await Music.create({ userId: req.user.id, ...req.body })
         return res.status(200).json("Liked added")
     }
     catch (err) {
@@ -35,7 +35,7 @@ export const isMusicLiked=async(req,res,next)=>{
 }
 export const removeMusicLiked=async(req,res,next)=>{
     try{
-        const comm=await Music.findOneAndDelete({videoId:req.params.id,userId:req.user.id})
+        const comm=await Music.findOneAndDelete({musicId:req.params.id,userId:req.user.id})
         return res.status(200).json("Liked removed")
     }
     catch(err){

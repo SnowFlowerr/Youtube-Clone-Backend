@@ -9,10 +9,13 @@ const musicLikeSchema=new mongoose.Schema({
         type:String,
         required:true,
     },
-    thimbnail:{
+    thumbnail:{
         type:String,
     },
     title:{
+        type:String,
+    },
+    img:{
         type:String,
     },
     channel:{

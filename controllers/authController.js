@@ -10,13 +10,13 @@ import nodemailer from "nodemailer";
 
 export const signup = async (req, res, next) => {
     try {
-        const { email } = req.body;
+        const email = req.body.email;
         console.log("signup");
         const checkUser = await User.findOne({ username: req.body.username })
         if (checkUser) {
             return next(addError(400, "Username Already Exist"))
         }
-        const checkEmail = await User.findOne(email)
+        const checkEmail = await User.findOne({email:email})
         if (checkEmail) {
             return next(addError(400, "Email Already Exist"))
         }
